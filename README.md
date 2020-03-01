@@ -3,9 +3,9 @@ Skynet App Store
 
 
 # Static folder
-This folder contains the static design that will be used to create the react app. To run the statis app use the following steps:
+This folder contains the static design that will be used to create the react app. To run the static app use the following steps:
 
---> go to the 'static folder. Make sure this folder has package.json among other folder.
+--> go to the 'static' folder. Make sure this folder has package.json among other folder.
 
 --> execute 'npm install' to install dependencies.
 
