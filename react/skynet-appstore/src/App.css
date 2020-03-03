@@ -10108,6 +10108,10 @@ a:focus {
   font-weight: 700;
 }
 
+.sidebar .nav-item .nav-link.active {
+  font-weight: 700;
+}
+
 .sidebar .nav-item .collapse {
   position: absolute;
   left: calc(6.5rem + 1.5rem / 2);
@@ -10390,7 +10394,15 @@ a:focus {
   color: #6e707e;
 }
 
+.sidebar-light .nav-item .nav-link.active {
+  color: #6e707e;
+}
+
 .sidebar-light .nav-item.active .nav-link i {
+  color: #6e707e;
+}
+
+.sidebar-light .nav-item .nav-link.active svg {
   color: #6e707e;
 }
 
@@ -10442,7 +10454,15 @@ a:focus {
   color: #fff;
 }
 
+.sidebar-dark .nav-item .nav-link.active {
+  color: #fff;
+}
+
 .sidebar-dark .nav-item.active .nav-link i {
+  color: #fff;
+}
+
+.sidebar-dark .nav-item .nav-link.active svg {
   color: #fff;
 }
 

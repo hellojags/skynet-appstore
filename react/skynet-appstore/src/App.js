@@ -6,13 +6,14 @@ import Grid from '@material-ui/core/Grid';
 import Search from '@material-ui/icons/Search';
 import TextField from '@material-ui/core/TextField';
 
-import { DropdownMenu, DropdownToggle, DropdownItem, UncontrolledDropdown } from 'reactstrap';
+import { Route, Link, BrowserRouter as Router, Switch, NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faEnvelope, faFan, faLaughWink, faCloudUploadAlt, faStar, faVideo, faBlog, faWifi,
           faHeadphones, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 
 import SNSearchbarComponent from './components/sn.searchbar.component';
+import SnCards from './components/sn.cards.component';
 
 library.add(faEnvelope, faFan, faLaughWink, faCloudUploadAlt, faStar, faVideo, faBlog, faWifi,
             faHeadphones, faEllipsisV);
@@ -31,6 +32,7 @@ function App() {
 
   return (
     <div id="wrapper">
+      <Router>
       <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <a className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -42,6 +44,7 @@ function App() {
 
         <hr className="sidebar-divider my-0" />
 
+        
         <li className="nav-item">
           <a className="nav-link" href="index.html">
             <FontAwesomeIcon icon="fan"></FontAwesomeIcon>
@@ -61,18 +64,19 @@ function App() {
         Categories
       </div>
 
-      {/* <!-- Nav Item - Charts --> */}
-      <li className="nav-item active">
-        <a className="nav-link" href="charts.html">
-          <FontAwesomeIcon icon="star"></FontAwesomeIcon>
-          <span>All</span></a>
+      <li className="nav-item">
+        <NavLink activeClassName="active" className="nav-link" to="/apps">
+            <FontAwesomeIcon icon="star"></FontAwesomeIcon>
+            <span>All</span>
+        </NavLink>
       </li>
       
       {/* <!-- Nav Item - Charts --> */}
       <li className="nav-item">
-        <a className="nav-link" href="charts.html">
+        <NavLink activeClassName="active" className="nav-link" to="/contact">
           <FontAwesomeIcon icon="video"></FontAwesomeIcon>
-          <span>Videos</span></a>
+          <span>Videos</span>
+        </NavLink>
       </li>
 
       {/* <!-- Nav Item - Tables --> */}
@@ -95,7 +99,6 @@ function App() {
           <FontAwesomeIcon icon="wifi"></FontAwesomeIcon>
           <span>WebApp</span></a>
       </li>
-
     </ul>
     
     <div id="content-wrapper" className="d-flex flex-column">
@@ -119,7 +122,7 @@ function App() {
           
             <Grid container spacing={1} alignItems="flex-end" className="width-100">
           <Grid item className="search-icon-grid">
-            <Search fontSizeLarge/>
+            <Search />
           </Grid>
           <Grid item className="width-90">
       <TextField
@@ -161,151 +164,20 @@ function App() {
 
         </nav>
         
-        <div className="container-fluid">
+        <Switch>
+        <Route exact path="/" component={SnCards} />
+        <Route path="/apps" component={SnCards} />
+        <Route path="/contact" component={SNSearchbarComponent} />
+        <Route component={SNSearchbarComponent} />
+      </Switch>
 
-          <div className="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 className="h3 mb-0 text-gray-800">All Apps</h1>
-          </div>
-
-<div className="card-container row">
-<div className="col-md-4">
-  <div className="card card-video">
-    <div className="card-count-container">
-      <h2 className="pl-30">Title</h2>
-      <div className="card-count">
-      <FontAwesomeIcon icon="video"></FontAwesomeIcon>
-      </div>
-    </div>
-    
-    <div className="card-content ">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis iste vel accusamus sequi laboriosam voluptatibus placeat omnis magni, at ducimus nesciunt? Tempora inventore tempore iure suscipit molestiae. Cum, ab labore?
-    </div>
-    
-    <div className="card-footer d-flex flex-row align-items-center justify-content-between">
-        Lorem ipsum dolor sit amet.
-        <UncontrolledDropdown>
-          <DropdownToggle
-            tag="span"
-            className="cursor-pointer"
-          >
-            <FontAwesomeIcon icon="ellipsis-v" className="text-gray-400"></FontAwesomeIcon>
-          </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem>Action</DropdownItem>
-            <DropdownItem>Action</DropdownItem>
-            <DropdownItem>Action</DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
-    </div>
-  </div>
-  </div>
-
-  <div className="col-md-4">
-  <div className="card card-audio">
-    <div className="card-count-container ">
-      <h2 className="pl-30">Title</h2>
-      <div className="card-count ">
-        <FontAwesomeIcon icon="headphones"></FontAwesomeIcon>
-      </div>
-    </div>
-    <div className="card-content ">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis iste vel accusamus sequi laboriosam voluptatibus placeat omnis magni, at ducimus nesciunt? Tempora inventore tempore iure suscipit molestiae. Cum, ab labore?
-    </div>
-    
-    <div className="card-footer d-flex flex-row align-items-center justify-content-between">
-        Lorem ipsum dolor sit amet.
-
-      <UncontrolledDropdown>
-        <DropdownToggle
-          tag="span"
-          className="cursor-pointer"
-        >
-          <FontAwesomeIcon icon="ellipsis-v" className="text-gray-400"></FontAwesomeIcon>
-        </DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem>Action</DropdownItem>
-          <DropdownItem>Action</DropdownItem>
-          <DropdownItem>Action</DropdownItem>
-        </DropdownMenu>
-      </UncontrolledDropdown>
-
-    </div>
-  </div>
-  </div>
-  
-
-  <div className="col-md-4">
-  <div className="card card-blog">
-    <div className="card-count-container ">
-      <h2 className="pl-30">Title</h2>
-      <div className="card-count ">
-        <FontAwesomeIcon icon="blog"></FontAwesomeIcon>
-      </div>
-    </div>
-    <div className="card-content ">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis iste vel accusamus sequi laboriosam voluptatibus placeat omnis magni, at ducimus nesciunt? Tempora inventore tempore iure suscipit molestiae. Cum, ab labore?
-    </div>
-    
-    <div className="card-footer d-flex flex-row align-items-center justify-content-between">
-        Lorem ipsum dolor sit amet.
-        <UncontrolledDropdown>
-          <DropdownToggle
-            tag="span"
-            className="cursor-pointer"
-          >
-            <FontAwesomeIcon icon="ellipsis-v" className="text-gray-400"></FontAwesomeIcon>
-          </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem>Action</DropdownItem>
-            <DropdownItem>Action</DropdownItem>
-            <DropdownItem>Action</DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
-
-    </div>
-  </div>
-  </div>
-
-  <div className="col-md-4">
-  <div className="card card-webapp">
-    <div className="card-count-container ">
-        <h2 className="pl-30">Titles</h2> 
-      <div className="card-count ">
-        <FontAwesomeIcon icon="wifi"></FontAwesomeIcon>
-      </div>
-    </div>
-    <div className="card-content ">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis iste vel accusamus sequi laboriosam voluptatibus placeat omnis magni, at ducimus nesciunt? Tempora inventore tempore iure suscipit molestiae. Cum, ab labore?
-    </div>
-    
-    <div className="card-footer d-flex flex-row align-items-center justify-content-between">
-        Lorem ipsum dolor sit amet.
-        <UncontrolledDropdown>
-          <DropdownToggle
-            tag="span"
-            className="cursor-pointer"
-          >
-            <FontAwesomeIcon icon="ellipsis-v" className="text-gray-400"></FontAwesomeIcon>
-          </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem>Action</DropdownItem>
-            <DropdownItem>Action</DropdownItem>
-            <DropdownItem>Action</DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
-    </div>
-  </div>
-  </div>
-</div>
-
-
-
-      </div>
+        {/* <SnCards /> */}
 
       <footer className="sticky-footer bg-white">
         <div className="container my-auto">
           <div className="copyright text-center my-auto">
             <span>Copyright &copy; Your Website 2019</span>
+            
           </div>
         </div>
       </footer>
@@ -313,6 +185,7 @@ function App() {
     </div>
 
   </div>
+  </Router>
     </div>
   );
 }
