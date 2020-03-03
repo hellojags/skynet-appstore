@@ -10535,15 +10535,15 @@ a:focus {
   align-items: center;
   overflow: hidden;
   width: 100%;
-  height: 200px;
+  height: 100px;
   padding: 20px 0px;
 }
 
 .card-container .card .card-count {
   font-weight: bold;
   font-size: 20px;
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10574,8 +10574,8 @@ a:focus {
 }
 
 .card-container .card:hover .card-count {
-  width: 130px;
-  height: 130px;
+  width: 100px;
+  height: 80px;
 }
 
 .card-container .card-video .card-count, .card-container .card-video .card-footer {
@@ -11014,5 +11014,25 @@ body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.pl-30 {
+  padding-left: 30px;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.width-90 {
+  width: 90%;
+}
+
+.search-icon-grid {
+  margin-bottom: 10px !important;
+  padding-right: 0px !important;
+}
 
 /* SKYNET END */
