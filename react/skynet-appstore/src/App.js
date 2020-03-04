@@ -14,6 +14,7 @@ import { faEnvelope, faFan, faLaughWink, faCloudUploadAlt, faStar, faVideo, faBl
 
 import SNSearchbarComponent from './components/sn.searchbar.component';
 import SnCards from './components/sn.cards.component';
+import {RENDER_CATEGORY_LOGO} from "./sn.constants";
 
 library.add(faEnvelope, faFan, faLaughWink, faCloudUploadAlt, faStar, faVideo, faBlog, faWifi,
             faHeadphones, faEllipsisV);
@@ -52,9 +53,10 @@ function App() {
         </li>
 
         <li className="nav-item">
-          <a className="nav-link" href="index.html">
+          <NavLink activeClassName="active" className="nav-link" to="/contact">
             <FontAwesomeIcon icon="cloud-upload-alt"></FontAwesomeIcon>
-            <span>Upload</span></a>
+            <span>Upload</span>
+          </NavLink>  
         </li>
 
       <hr className="sidebar-divider" />
@@ -65,39 +67,41 @@ function App() {
       </div>
 
       <li className="nav-item">
-        <NavLink activeClassName="active" className="nav-link" to="/apps">
+        <NavLink activeClassName="active" className="nav-link" to="/apps/all">
             <FontAwesomeIcon icon="star"></FontAwesomeIcon>
             <span>All</span>
         </NavLink>
       </li>
       
-      {/* <!-- Nav Item - Charts --> */}
       <li className="nav-item">
-        <NavLink activeClassName="active" className="nav-link" to="/contact">
-          <FontAwesomeIcon icon="video"></FontAwesomeIcon>
+        <NavLink activeClassName="active" className="nav-link" to="/apps/video">
+          {RENDER_CATEGORY_LOGO('video')}
           <span>Videos</span>
         </NavLink>
       </li>
 
       {/* <!-- Nav Item - Tables --> */}
       <li className="nav-item">
-        <a className="nav-link" href="tables.html">
-          <FontAwesomeIcon icon="headphones"></FontAwesomeIcon>
-          <span>Audio</span></a>
+        <NavLink activeClassName="active" className="nav-link" to="/apps/audio">
+          {RENDER_CATEGORY_LOGO('audio')}
+          <span>Audio</span>
+        </NavLink>
       </li>
 
       {/* <!-- Nav Item - Tables --> */}
       <li className="nav-item">
-        <a className="nav-link" href="tables.html">
-          <FontAwesomeIcon icon="blog"></FontAwesomeIcon>
-          <span>Blog</span></a>
+        <NavLink activeClassName="active" className="nav-link" to="/apps/blog">
+          {RENDER_CATEGORY_LOGO('blog')}
+          <span>Blog</span>
+        </NavLink>
       </li>
 
       {/* <!-- Nav Item - Tables --> */}
       <li className="nav-item">
-        <a className="nav-link" href="tables.html">
-          <FontAwesomeIcon icon="wifi"></FontAwesomeIcon>
-          <span>WebApp</span></a>
+        <NavLink activeClassName="active" className="nav-link" to="/apps/webapp">
+          {RENDER_CATEGORY_LOGO('webapp')}
+          <span>Webapp</span>
+        </NavLink>
       </li>
     </ul>
     
@@ -166,7 +170,7 @@ function App() {
         
         <Switch>
         <Route exact path="/" component={SnCards} />
-        <Route path="/apps" component={SnCards} />
+        <Route path="/apps/:category" component={SnCards} />
         <Route path="/contact" component={SNSearchbarComponent} />
         <Route component={SNSearchbarComponent} />
       </Switch>

@@ -10581,6 +10581,7 @@ a:focus {
 .card-container .card .card-content {
   padding: 20px;
   padding-top: 0px;
+  height: 120px;
 }
 
 .card-container .card .card-content > h2 {
