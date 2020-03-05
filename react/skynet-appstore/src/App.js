@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Search from '@material-ui/icons/Search';
 import TextField from '@material-ui/core/TextField';
 
-import { Route, Link, BrowserRouter as Router, Switch, NavLink } from 'react-router-dom'
+import { Route, Link, BrowserRouter as Router, Switch, NavLink, Redirect } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faEnvelope, faFan, faLaughWink, faCloudUploadAlt, faStar, faVideo, faBlog, faWifi,
@@ -169,7 +169,9 @@ function App() {
         </nav>
         
         <Switch>
-        <Route exact path="/" component={SnCards} />
+        <Route exact path="/">
+          <Redirect to="/apps/all" /> 
+        </Route>
         <Route path="/apps/:category" component={SnCards} />
         <Route path="/contact" component={SNSearchbarComponent} />
         <Route component={SNSearchbarComponent} />
