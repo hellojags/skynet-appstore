@@ -134,7 +134,7 @@ class SnCards extends React.Component {
         </div>
       );
     } else {
-      return (<div class="loader"><div></div><div></div><div></div><div></div></div>)
+      return (<div class="loader"></div>)
     }
   }
 }
