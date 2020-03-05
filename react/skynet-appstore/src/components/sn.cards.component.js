@@ -23,12 +23,10 @@ class SnCards extends React.Component {
 
   componentDidMount(){
     const {category} = this.props.match.params;
-    console.log(category);
-    this.setState({category})
+    this.setState({category});
     fetch('http://www.mocky.io/v2/5e5f23ae3100004b00afd966')
     .then(res => res.json())
     .then((result) => {
-      console.log('finished fetch');
       this.setState({
         apps : result,
         appsLoaded : true
@@ -41,17 +39,28 @@ class SnCards extends React.Component {
     });
   }
 
-  shouldComponentUpdate(nextProps, nextState){
-    console.log(this.state);
-    const { category } = nextProps.match.params;
-    console.log(nextProps.match, nextState, category);
-    return true;
+  componentDidUpdate(prevProps, prevState, snapshot){
+    const {category} = this.props.match.params;
+    if (category !== this.state.category){
+      this.setState({category});
+      fetch('http://www.mocky.io/v2/5e5f23ae3100004b00afd966?category='+category)
+      .then(res => res.json())
+      .then((result) => {
+        this.setState({
+          apps : result,
+          appsLoaded : true
+        });
+      },
+      (error) => {
+        this.setState({
+          error
+        })
+      });
+    }
   }
 
   render() {
-    console.log('running render');
     const { apps, error, appsLoaded } = this.state;
-
     if (appsLoaded){
 
       return (
