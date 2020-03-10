@@ -11101,6 +11101,10 @@ body.sidebar-toggled footer.sticky-footer {
 .select-grid{
   padding-top: 15px !important;
 }
+
+.paddingt-40{
+  padding-top: 40px !important;
+}
 /* REGISTER CSS END */
 
 /* SKYNET END */
