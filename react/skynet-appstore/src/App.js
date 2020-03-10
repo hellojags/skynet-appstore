@@ -13,8 +13,9 @@ import { faEnvelope, faFan, faLaughWink, faCloudUploadAlt, faStar, faVideo, faBl
           faHeadphones, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 
 import SNSearchbarComponent from './components/sn.searchbar.component';
-import SnCards from './components/sn.cards.component';
+import SnCards from './components/sn.cards';
 import {RENDER_CATEGORY_LOGO} from "./sn.constants";
+import SnRegister from './components/sn.register';
 
 library.add(faEnvelope, faFan, faLaughWink, faCloudUploadAlt, faStar, faVideo, faBlog, faWifi,
             faHeadphones, faEllipsisV);
@@ -47,9 +48,10 @@ function App() {
 
         
         <li className="nav-item">
-          <a className="nav-link" href="index.html">
+          <NavLink activeClassName="active" className="nav-link" to="/register">
             <FontAwesomeIcon icon="fan"></FontAwesomeIcon>
-            <span>Register</span></a>
+            <span>Register</span>
+          </NavLink>
         </li>
 
         <li className="nav-item">
@@ -172,6 +174,7 @@ function App() {
         <Route exact path="/">
           <Redirect to="/apps/all" /> 
         </Route>
+        <Route path="/register" component={SnRegister} />
         <Route path="/apps/:category" component={SnCards} />
         <Route path="/contact" component={SNSearchbarComponent} />
         <Route component={SNSearchbarComponent} />

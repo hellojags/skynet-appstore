@@ -9572,7 +9572,7 @@ a:focus {
 #wrapper #content-wrapper {
   background-color: #f8f9fc;
   width: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 #wrapper #content-wrapper #content {
@@ -11087,5 +11087,20 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 /* loader css end */
+
+/* REGISTER CSS START */
+.register-container .MuiGrid-root {
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
+.select-grid div.MuiFormControl-root.makeStyles-formControl-173{
+  width: 100%;
+}
+
+.select-grid{
+  padding-top: 15px !important;
+}
+/* REGISTER CSS END */
 
 /* SKYNET END */
