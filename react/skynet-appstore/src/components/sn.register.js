@@ -12,6 +12,7 @@ import {
   Button
 } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 const useStyles = theme => ({
   formControl: {
@@ -26,6 +27,7 @@ class SnRegister extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      showLoader: false,
       skyapp: {
         title: "",
         description: "",
@@ -38,12 +40,27 @@ class SnRegister extends React.Component {
       }
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(evt){
+    evt.preventDefault();
+    const url='';
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(this.state.skyapp),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(response => console.log(response));
   }
 
   handleChange(evt) {
     console.log(evt.target.type);
     const eleType = evt.target.type;
-    const skyapp = this.state.skyapp;
+    const {skyapp} = this.state.skyapp;
     if (eleType === "checkbox") {
       skyapp[evt.target.name] = evt.target.checked;
     } else {
@@ -54,139 +71,154 @@ class SnRegister extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { skyapp } = this.state;
-    return (
-      <div className="container-fluid register-container">
-        <div className="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 className="h3 mb-0 text-gray-800">Register SkyApp</h1>
-        </div>
-        <form>
-          <Grid container spacing={5}>
-            <Grid item xs={12}>
-              <TextField
-                required
-                id="title"
-                name="title"
-                label="Title"
-                fullWidth
-                autoComplete="off"
-                helperText="Max 15 charecters"
-                onChange={this.handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                id="description"
-                name="description"
-                label="Description"
-                fullWidth
-                autoComplete="off"
-                helperText="Max 200 charecters"
-                onChange={this.handleChange}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                required
-                id="fileName"
-                name="fileName"
-                label="File Name"
-                fullWidth
-                autoComplete="off"
-                onChange={this.handleChange}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                required
-                id="fileFormat"
-                name="fileFormat"
-                label="File Format"
-                fullWidth
-                autoComplete="off"
-                onChange={this.handleChange}
-              />
-            </Grid>
-            <Grid item xs={6} className="select-grid">
-              <FormControl className={classes.formControl}>
-                <InputLabel id="demo-simple-select-label">Type</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+    const { showLoader, skyapp } = this.state;
+
+    if (!showLoader) {
+      return (
+        <div className="container-fluid register-container">
+          <div className="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 className="h3 mb-0 text-gray-800">Register SkyApp</h1>
+          </div>
+          <ValidatorForm ref="form"
+            onSubmit={this.handleSubmit}
+            onError={errors => console.log(errors)}>
+            <Grid container spacing={5}>
+              <Grid item xs={12}>
+                <TextField
+                  id="title"
+                  name="title"
+                  label="Title"
                   fullWidth
-                  value={skyapp.type}
-                  name="type"
+                  autoComplete="off"
+                  helperText="Max 15 charecters"
+                  validators={['required']}
+                  errorMessages={['Title is required']}
                   onChange={this.handleChange}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Directory</MenuItem>
-                  <MenuItem value={20}>File</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={6} className="select-grid">
-              <FormControl className={classes.formControl}>
-                <InputLabel id="demo-simple-select-label">Category</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="category"
+                  onInput = {(e) =>{
+                    e.target.value = e.target.value.slice(0,15)
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  id="description"
+                  name="description"
+                  label="Description"
                   fullWidth
-                  value={skyapp.category}
-                  name="category"
+                  autoComplete="off"
+                  helperText="Max 200 charecters"
+                  onInput = {(e) =>{
+                    e.target.value = e.target.value.slice(0,200)
+                  }}
                   onChange={this.handleChange}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Video</MenuItem>
-                  <MenuItem value={20}>Audio</MenuItem>
-                  <MenuItem value={20}>Blog</MenuItem>
-                  <MenuItem value={20}>Dataset</MenuItem>
-                  <MenuItem value={20}>SkyApp</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                id="githubUrl"
-                name="githubUrl"
-                label="Github URL"
-                fullWidth
-                autoComplete="off"
-                onChange={this.handleChange}
-              />
-            </Grid>
-            <Grid item xs={6} className="paddingt-40">
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    color="secondary"
-                    name="searchable"
-                    checked={skyapp.searchable}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  required
+                  id="fileName"
+                  name="fileName"
+                  label="File Name"
+                  fullWidth
+                  autoComplete="off"
+                  onChange={this.handleChange}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  required
+                  id="fileFormat"
+                  name="fileFormat"
+                  label="File Format"
+                  fullWidth
+                  autoComplete="off"
+                  onChange={this.handleChange}
+                />
+              </Grid>
+              <Grid item xs={6} className="select-grid">
+                <FormControl className={classes.formControl}>
+                  <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    fullWidth
+                    value={skyapp.type}
+                    name="type"
                     onChange={this.handleChange}
-                  />
-                }
-                label="Searchable"
-              />
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={10}>Directory</MenuItem>
+                    <MenuItem value={20}>File</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6} className="select-grid">
+                <FormControl className={classes.formControl}>
+                  <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="category"
+                    fullWidth
+                    value={skyapp.category}
+                    name="category"
+                    onChange={this.handleChange}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={10}>Video</MenuItem>
+                    <MenuItem value={20}>Audio</MenuItem>
+                    <MenuItem value={20}>Blog</MenuItem>
+                    <MenuItem value={20}>Dataset</MenuItem>
+                    <MenuItem value={20}>SkyApp</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  id="githubUrl"
+                  name="githubUrl"
+                  label="Github URL"
+                  fullWidth
+                  autoComplete="off"
+                  onChange={this.handleChange}
+                />
+              </Grid>
+              <Grid item xs={6} className="paddingt-40">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="secondary"
+                      name="searchable"
+                      checked={skyapp.searchable}
+                      onChange={this.handleChange}
+                    />
+                  }
+                  label="Searchable"
+                />
+              </Grid>
+              <Grid item xs={12} className="button-grid">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className="btn-20px"
+                  type="submit"
+                  startIcon={<SaveIcon />}
+                >
+                  Save
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={12} className="button-grid">
-              <Button
-                variant="contained"
-                color="primary"
-                className="btn-20px"
-                type="submit"
-                startIcon={<SaveIcon />}
-              >
-                Save
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-    );
+          </ValidatorForm>
+        </div>
+      );
+    } else {
+      return (<div className="loader"></div>);
+    }
+    
   }
 }
 
