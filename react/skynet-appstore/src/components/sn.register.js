@@ -12,7 +12,14 @@ import {
   Button
 } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import DoneIcon from "@material-ui/icons/Done";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Slide from "@material-ui/core/Slide";
 
 const useStyles = theme => ({
   formControl: {
@@ -23,11 +30,16 @@ const useStyles = theme => ({
   }
 });
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 class SnRegister extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showLoader: false,
+      openSecretIdDlg: false,
       skyapp: {
         title: "",
         description: "",
@@ -41,26 +53,41 @@ class SnRegister extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSecretIdDlgClose = this.handleSecretIdDlgClose.bind(this);
   }
 
-  handleSubmit(evt){
+  handleSecretIdDlgClose() {
+    this.setState({ openSecretIdDlg: false });
+  }
+
+  handleSubmit(evt) {
     evt.preventDefault();
-    const url='';
+    const url = "";
+    this.setState({ showLoader: true });
     fetch(url, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(this.state.skyapp),
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       }
     })
-    .then(res => res.json())
-    .then(response => console.log(response));
+      .then(res => res.json())
+      .catch(err => {
+        this.setState({ showLoader: false });
+      })
+      .then(response => {
+        console.log(response);
+        this.setState({
+          showLoader: false,
+          openSecretIdDlg: true
+        });
+      });
   }
 
   handleChange(evt) {
     console.log(evt.target.type);
     const eleType = evt.target.type;
-    const {skyapp} = this.state.skyapp;
+    const { skyapp } = this.state.skyapp;
     if (eleType === "checkbox") {
       skyapp[evt.target.name] = evt.target.checked;
     } else {
@@ -71,7 +98,7 @@ class SnRegister extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { showLoader, skyapp } = this.state;
+    const { showLoader, skyapp, openSecretIdDlg } = this.state;
 
     if (!showLoader) {
       return (
@@ -79,9 +106,11 @@ class SnRegister extends React.Component {
           <div className="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 className="h3 mb-0 text-gray-800">Register SkyApp</h1>
           </div>
-          <ValidatorForm ref="form"
+          <ValidatorForm
+            ref="form"
             onSubmit={this.handleSubmit}
-            onError={errors => console.log(errors)}>
+            onError={errors => console.log(errors)}
+          >
             <Grid container spacing={5}>
               <Grid item xs={12}>
                 <TextField
@@ -91,32 +120,30 @@ class SnRegister extends React.Component {
                   fullWidth
                   autoComplete="off"
                   helperText="Max 15 charecters"
-                  validators={['required']}
-                  errorMessages={['Title is required']}
+                  validators={["required"]}
+                  errorMessages={["Title is required"]}
                   onChange={this.handleChange}
-                  onInput = {(e) =>{
-                    e.target.value = e.target.value.slice(0,15)
+                  onInput={e => {
+                    e.target.value = e.target.value.slice(0, 15);
                   }}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   id="description"
                   name="description"
                   label="Description"
                   fullWidth
                   autoComplete="off"
                   helperText="Max 200 charecters"
-                  onInput = {(e) =>{
-                    e.target.value = e.target.value.slice(0,200)
+                  onInput={e => {
+                    e.target.value = e.target.value.slice(0, 200);
                   }}
                   onChange={this.handleChange}
                 />
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  required
                   id="fileName"
                   name="fileName"
                   label="File Name"
@@ -127,7 +154,6 @@ class SnRegister extends React.Component {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  required
                   id="fileFormat"
                   name="fileFormat"
                   label="File Format"
@@ -157,7 +183,9 @@ class SnRegister extends React.Component {
               </Grid>
               <Grid item xs={6} className="select-grid">
                 <FormControl className={classes.formControl}>
-                  <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                  <InputLabel id="demo-simple-select-label">
+                    Category
+                  </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="category"
@@ -213,12 +241,44 @@ class SnRegister extends React.Component {
               </Grid>
             </Grid>
           </ValidatorForm>
+
+          <Dialog
+            open={openSecretIdDlg}
+            onClose={this.handleSecretIdDlgClose}
+            TransitionComponent={Transition}
+            keepMounted
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Your App Secret ID"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Your App secret ID is 'aaaa-bbbb-1234'. Please save this ID at a
+                secure place. You will need this ID to be able to make any
+                updates to your SkyApp. You will now be redirected to All Apps
+                page.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={this.handleSecretIdDlgClose}
+                autoFocus
+                variant="contained"
+                color="primary"
+                className="btn-20px"
+                startIcon={<DoneIcon />}
+              >
+                OK
+              </Button>
+            </DialogActions>
+          </Dialog>
         </div>
       );
     } else {
-      return (<div className="loader"></div>);
+      return <div className="loader"></div>;
     }
-    
   }
 }
 
