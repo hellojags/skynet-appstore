@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import {
   Select,
   InputLabel,
@@ -14,19 +14,29 @@ import {
 } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 
-const useStyles = makeStyles(theme => ({
+/* const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1)
   },
   selectEmpty: {
     marginTop: theme.spacing(2)
   }
-}));
+})); */
 
-export default function SnRegister() {
-  const classes = useStyles();
+const useStyles = theme => ({
+  formControl: {
+    margin: theme.spacing(1)
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2)
+  }
+});
 
-  //render() {
+//export default function SnRegister() {
+class SnRegister extends React.Component {
+
+  render() {
+    const { classes } = this.props;
   return (
     <div className="container-fluid register-container">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
@@ -145,5 +155,8 @@ export default function SnRegister() {
       </Grid>
     </div>
   );
-  //}
+  }
 }
+
+
+export default withStyles(useStyles)(SnRegister)
