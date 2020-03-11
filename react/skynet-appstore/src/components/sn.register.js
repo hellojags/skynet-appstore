@@ -14,15 +14,6 @@ import {
 } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 
-/* const useStyles = makeStyles(theme => ({
-  formControl: {
-    margin: theme.spacing(1)
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2)
-  }
-})); */
-
 const useStyles = theme => ({
   formControl: {
     margin: theme.spacing(1)
@@ -32,8 +23,36 @@ const useStyles = theme => ({
   }
 });
 
-//export default function SnRegister() {
 class SnRegister extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      skyapp: {
+        title: '',
+        description: '',
+        fileName: '',
+        fileFormat: '',
+        type: '',
+        category: '',
+        githubUrl: '',
+        searchable: true
+      }
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange (evt) {
+    console.log(evt.target.type);
+    const eleType = evt.target.type;
+    const skyapp = this.state.skyapp;
+    if (eleType==='checkbox'){
+      skyapp[evt.target.name] = evt.target.checked;
+    } else {
+      skyapp[evt.target.name] = evt.target.value;
+    }
+    this.setState({skyapp});
+  }
 
   render() {
     const { classes } = this.props;
@@ -55,6 +74,7 @@ class SnRegister extends React.Component {
             fullWidth
             autoComplete="off"
             helperText="Max 15 charecters"
+            onChange={this.handleChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -66,6 +86,7 @@ class SnRegister extends React.Component {
             fullWidth
             autoComplete="off"
             helperText="Max 200 charecters"
+            onChange={this.handleChange}
           />
         </Grid>
         <Grid item xs={6}>
@@ -76,6 +97,7 @@ class SnRegister extends React.Component {
             label="File Name"
             fullWidth
             autoComplete="off"
+            onChange={this.handleChange}
           />
         </Grid>
         <Grid item xs={6}>
@@ -86,6 +108,7 @@ class SnRegister extends React.Component {
             label="File Format"
             fullWidth
             autoComplete="off"
+            onChange={this.handleChange}
           />
         </Grid>
         <Grid item xs={6} className="select-grid">
@@ -95,7 +118,8 @@ class SnRegister extends React.Component {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               fullWidth
-              name="age"
+              name="type"
+              onChange={this.handleChange}
             >
               <MenuItem value="">
                 <em>None</em>
@@ -113,6 +137,7 @@ class SnRegister extends React.Component {
               id="category"
               fullWidth
               name="category"
+              onChange={this.handleChange}
             >
               <MenuItem value="">
                 <em>None</em>
@@ -132,12 +157,16 @@ class SnRegister extends React.Component {
             label="Github URL"
             fullWidth
             autoComplete="off"
+            onChange={this.handleChange}
           />
         </Grid>
         <Grid item xs={6} className="paddingt-40">
           <FormControlLabel
             control={
-              <Checkbox color="secondary" name="searchable" value="yes" />
+              <Checkbox color="secondary" 
+                    name="searchable"
+                    checked={skyapp.searchable}
+                    onChange={this.handleChange}/>
             }
             label="Searchable"
           />
