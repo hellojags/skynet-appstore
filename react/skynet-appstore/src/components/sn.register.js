@@ -56,6 +56,7 @@ class SnRegister extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { skyapp } = this.state;
   return (
     <div className="container-fluid register-container">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
