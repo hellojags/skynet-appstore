@@ -11106,6 +11106,14 @@ body.sidebar-toggled footer.sticky-footer {
 .paddingt-40{
   padding-top: 40px !important;
 }
+
+.button-grid{
+  text-align: right;
+}
+
+.btn-20px{
+  font-size: 20px !important;  
+}
 /* REGISTER CSS END */
 
 /* SKYNET END */
