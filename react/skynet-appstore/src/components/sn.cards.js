@@ -7,6 +7,8 @@ import {
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {RENDER_CATEGORY_LOGO} from "../sn.constants";
+import InfoRoundedIcon from '@material-ui/icons/InfoRounded';
+import {Redirect} from "react-router-dom";
 
 function renderPageHeading(category){
   switch(category){
@@ -34,14 +36,23 @@ class SnCards extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      goToApp: false,
+      skyappId: '',
       apps: [],
       error: null,
       appsLoaded: false,
       category: null
     };
+    this.openSkyApp = this.openSkyApp.bind(this);
   }
 
-
+  openSkyApp(skyappId){
+    console.log(skyappId);
+    this.setState({
+      goToApp: true,
+      skyappId
+    });
+  }
 
   componentDidMount(){
     const {category} = this.props.match.params;
@@ -65,7 +76,7 @@ class SnCards extends React.Component {
     const {category} = this.props.match.params;
     if (category !== this.state.category){
       this.setState({category});
-      fetch('http://www.mocky.io/v2/5e5f23ae3100004b00afd966?category='+category)
+      fetch('http://www.mocky.io/v2/5e5f23ae3100004b00afd966?category='+category) //TODO
       .then(res => res.json())
       .then((result) => {
         this.setState({
@@ -84,7 +95,11 @@ class SnCards extends React.Component {
 
 
   render() {
-    const { apps, error, appsLoaded, category } = this.state;
+    const { apps, error, appsLoaded, category, goToApp, skyappId } = this.state;
+
+    if (goToApp){
+      return <Redirect to={"/skyapps/"+skyappId} />;
+    }
     if (appsLoaded){
 
       return (
@@ -109,21 +124,21 @@ class SnCards extends React.Component {
                   {app.descripton}
                 </div>
   
-                <div className="card-footer d-flex flex-row align-items-center justify-content-between">
-                  Lorem ipsum dolor sit amet.
-                  <UncontrolledDropdown>
+                <div className="card-footer">
+                  
+                  <InfoRoundedIcon 
+                    className="float-right cursor-pointer" 
+                    onClick={() => this.openSkyApp(app.skapp_id)}/>
+                  {/* <UncontrolledDropdown>
                     <DropdownToggle tag="span" className="cursor-pointer">
-                      <FontAwesomeIcon
-                        icon="ellipsis-v"
-                        className="text-gray-400"
-                      ></FontAwesomeIcon>
+                      <InfoRoundedIcon />
                     </DropdownToggle>
                     <DropdownMenu>
                       <DropdownItem>Action</DropdownItem>
                       <DropdownItem>Action</DropdownItem>
                       <DropdownItem>Action</DropdownItem>
                     </DropdownMenu>
-                  </UncontrolledDropdown>
+                  </UncontrolledDropdown> */}
                 </div>
               </div>
             </div>

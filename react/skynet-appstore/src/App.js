@@ -54,12 +54,12 @@ function App() {
           </NavLink>
         </li>
 
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <NavLink activeClassName="active" className="nav-link" to="/contact">
             <FontAwesomeIcon icon="cloud-upload-alt"></FontAwesomeIcon>
             <span>Upload</span>
           </NavLink>  
-        </li>
+        </li> */}
 
       <hr className="sidebar-divider" />
 
@@ -176,6 +176,7 @@ function App() {
         </Route>
         <Route path="/register" component={SnRegister} />
         <Route path="/apps/:category" component={SnCards} />
+        <Route path="/skyapps/:id" component={SnRegister} />
         <Route path="/contact" component={SNSearchbarComponent} />
         <Route component={SNSearchbarComponent} />
       </Switch>

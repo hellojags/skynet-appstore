@@ -10591,7 +10591,7 @@ a:focus {
 }
 
 .card-container .card .card-footer {
-  padding: 20px;
+  padding: 10px;
   color: #ffffff;
 }
 
@@ -11113,6 +11113,10 @@ body.sidebar-toggled footer.sticky-footer {
 
 .btn-20px{
   font-size: 20px !important;  
+}
+
+.button-grid button{
+  margin-left: 50px;
 }
 /* REGISTER CSS END */
 
