@@ -22,6 +22,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import {Redirect} from "react-router-dom";
 import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = theme => ({
   formControl: {
@@ -87,6 +88,12 @@ class SnRegister extends React.Component {
     this.handleEditBtn = this.handleEditBtn.bind(this);
     this.handleSkyAppSecretChange = this.handleSkyAppSecretChange.bind(this);
     this.handleEnableEditDlgOkBtn = this.handleEnableEditDlgOkBtn.bind(this);
+    this.handleEnableEditDlgClose = this.handleEnableEditDlgClose.bind(this);
+
+  }
+
+  handleEnableEditDlgClose(){
+    this.setState({openEnableEditDlg: false});
   }
 
   handleEnableEditDlgOkBtn(evt){
@@ -451,7 +458,7 @@ class SnRegister extends React.Component {
                     color="secondary"
                     className="btn-20px"
                     type="button"
-                    startIcon={<SaveIcon />}
+                    startIcon={<DeleteIcon />}
                   >
                     Delete
                   </Button>
