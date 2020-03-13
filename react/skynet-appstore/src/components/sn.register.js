@@ -41,10 +41,10 @@ const emptySkyApp = {
   title: "",
   description: "",
   fileName: "",
-  fileFormat: "",
+  fileformat: "",
   type: "",
   category: "",
-  githubUrl: "",
+  git_url: "",
   searchable: false,
   id: ""
 };
@@ -73,10 +73,10 @@ class SnRegister extends React.Component {
         title: "",
         description: "",
         fileName: "",
-        fileFormat: "",
+        fileformat: "",
         type: "",
         category: "",
-        githubUrl: "",
+        git_url: "",
         searchable: true,
         id:''
       }
@@ -178,10 +178,10 @@ class SnRegister extends React.Component {
           title: "The Title",
           description: "This is the description which must be of maximum 200 chars long.",
           fileName: "the_file",
-          fileFormat: "png",
+          fileformat: "png",
           type: "20",
           category: "10",
-          githubUrl: "https://myurl.github.com",
+          git_url: "https://myurl.github.com",
           searchable: true,
           id: 'A001'
         }
@@ -335,11 +335,11 @@ class SnRegister extends React.Component {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  id="fileFormat"
-                  name="fileFormat"
+                  id="fileformat"
+                  name="fileformat"
                   label="File Format"
                   fullWidth
-                  value={skyapp.fileFormat}
+                  value={skyapp.fileformat}
                   disabled={!isRegister && !edit}
                   autoComplete="off"
                   onChange={this.handleChange}
@@ -392,12 +392,12 @@ class SnRegister extends React.Component {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  id="githubUrl"
-                  name="githubUrl"
+                  id="git_url"
+                  name="git_url"
                   disabled={!isRegister && !edit}
                   label="Github URL"
                   fullWidth
-                  value={skyapp.githubUrl}
+                  value={skyapp.git_url}
                   autoComplete="off"
                   onChange={this.handleChange}
                 />

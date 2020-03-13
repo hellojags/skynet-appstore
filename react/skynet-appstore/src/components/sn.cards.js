@@ -57,9 +57,11 @@ class SnCards extends React.Component {
   componentDidMount(){
     const {category} = this.props.match.params;
     this.setState({category});
-    fetch('http://www.mocky.io/v2/5e5f23ae3100004b00afd966?category='+category) // videos : http://www.mocky.io/v2/5e60819a330000800097b99e
+    //fetch('http://www.mocky.io/v2/5e5f23ae3100004b00afd966?category='+category) // videos : http://www.mocky.io/v2/5e60819a330000800097b99e
+    fetch('https://skynethub-api.herokuapp.com/skapps')
     .then(res => res.json())
     .then((result) => {
+      console.log("SKyapps : ", result);
       this.setState({
         apps : result,
         appsLoaded : true
@@ -110,9 +112,9 @@ class SnCards extends React.Component {
   
           <div className="card-container row">
             {apps.map((app, i) => (
-              <div className="col-md-3" key={i}>
+              <div className="col-md-3 side-padding-0" key={i}>
               {/* <div className="card card-video"> */}
-              <div className={'card card-' + app.category}>
+              <div className={'card card-' + app.category.toLowerCase()}>
                 <div className="card-count-container">
                   <h2 className="pl-30"> {app.title} </h2>
                   <div className="card-count">
@@ -121,7 +123,7 @@ class SnCards extends React.Component {
                 </div>
   
                 <div className="card-content ">
-                  {app.descripton}
+                  {app.description}
                 </div>
   
                 <div className="card-footer">

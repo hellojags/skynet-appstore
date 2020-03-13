@@ -10545,7 +10545,7 @@ a:focus {
 }
 
 .card-container .card {
-  margin: 20px;
+  margin: 10px;
   border-radius: 10px;
   background-color: #ffffff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
@@ -10558,6 +10558,11 @@ a:focus {
   width: 100%;
   height: 100px;
   padding: 20px 0px;
+}
+
+.side-padding-0{
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 .card-container .card .card-count {
@@ -10612,7 +10617,7 @@ a:focus {
   background-image: linear-gradient(90deg, #6fc6a9, #058ba9);
 }
 
-.card-container .card-webapp .card-count, .card-container .card-webapp .card-footer {
+.card-container .card-app .card-count, .card-container .card-app .card-footer {
   background-image: linear-gradient(90deg, #bbc66f, #66a905);
 }
 

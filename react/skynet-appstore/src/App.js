@@ -101,7 +101,7 @@ function App() {
       {/* <!-- Nav Item - Tables --> */}
       <li className="nav-item">
         <NavLink activeClassName="active" className="nav-link" to="/apps/webapp">
-          {RENDER_CATEGORY_LOGO('webapp')}
+          {RENDER_CATEGORY_LOGO('app')}
           <span>Webapp</span>
         </NavLink>
       </li>
