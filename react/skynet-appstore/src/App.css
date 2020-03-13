@@ -10101,7 +10101,7 @@ a:focus {
 }
 
 .sidebar .nav-item .nav-link span {
-  font-size: 0.65rem;
+  font-size: 20px;
   display: block;
 }
 
@@ -10277,7 +10277,7 @@ a:focus {
     margin-right: 0.25rem;
   }
   .sidebar .nav-item .nav-link span {
-    font-size: 0.85rem;
+    font-size: 20px;
     display: inline;
   }
   .sidebar .nav-item .nav-link[data-toggle="collapse"]::after {
@@ -10357,6 +10357,9 @@ a:focus {
   .sidebar.toggled .sidebar-heading {
     text-align: center;
   }
+}
+.sidebar-brand-text{
+  font-size: 20px;
 }
 
 .sidebar-light .sidebar-brand {

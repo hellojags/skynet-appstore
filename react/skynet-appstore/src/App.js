@@ -41,7 +41,7 @@ function App() {
           <div className="d-none sidebar-brand-icon rotate-n-15">
             <FontAwesomeIcon icon="laugh-wink"></FontAwesomeIcon>
           </div>
-          <div className="sidebar-brand-text mx-3">SKYNET SEARCH <sup>A</sup></div>
+          <div className="sidebar-brand-text mx-3">SKYNET STORE</div>
         </a>
 
         <hr className="sidebar-divider my-0" />

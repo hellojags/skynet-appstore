@@ -40,7 +40,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const emptySkyApp = {
   title: "",
   description: "",
-  fileName: "",
+  filename: "",
   fileformat: "",
   type: "",
   category: "",
@@ -71,6 +71,7 @@ class SnRegister extends React.Component {
       isRegister: false,
       openEnableEditDlg: false,
       skyAppSecret: "",
+      openEdtFailDlg: false,
       skyapp: emptySkyApp
     };
     this.handleChange = this.handleChange.bind(this);
@@ -81,6 +82,11 @@ class SnRegister extends React.Component {
     this.handleSkyAppSecretChange = this.handleSkyAppSecretChange.bind(this);
     this.handleEnableEditDlgOkBtn = this.handleEnableEditDlgOkBtn.bind(this);
     this.handleEnableEditDlgClose = this.handleEnableEditDlgClose.bind(this);
+    this.handleEdtFailDlgClose = this.handleEdtFailDlgClose.bind(this);
+  }
+
+  handleEdtFailDlgClose(){
+    this.setState({openEdtFailDlg: false});
   }
 
   handleEnableEditDlgClose() {
@@ -169,13 +175,14 @@ class SnRegister extends React.Component {
           skyapp: {
             title: res.title,
             description: res.description,
-            fileName: res.filename,
+            filename: res.filename,
             fileformat: res.fileformat,
-            type: "20",
+            type: res.type,
             category: res.category ? res.category.toLowerCase() : "",
             git_url: res.git_url,
             searchable: res.searchable == "true",
-            id: res.id
+            id: res.id,
+            skyAppSecret: res.skyAppSecret
           }
         });
         console.log("this.setState ", this.state.skyapp);
@@ -214,14 +221,18 @@ class SnRegister extends React.Component {
     console.log("this.setState ", this.state.skyapp);
   }
 
-  handleSubmit(evt) {
+  handleSubmit(evt, param) {
     evt.preventDefault();
     let url = "https://skynethub-api.herokuapp.com/skapps/";
     let apiMethod = "POST";
-
-    if (this.state.edit) {
+    console.log(param);
+    if (!this.state.isRegister) {
       url += appId;
-      apiMethod = "PUT";
+      if (param=='delete'){
+        apiMethod = "DELETE";
+      } else {
+        apiMethod = "PUT";
+      }
     }
     this.setState({ showLoader: true });
     console.log("this.setState ", this.state.skyapp, this.state.isRegister);
@@ -268,7 +279,8 @@ class SnRegister extends React.Component {
       redirectToAllApps,
       isRegister,
       edit,
-      openEnableEditDlg
+      openEnableEditDlg,
+      openEdtFailDlg
     } = this.state;
 
     if (redirectToAllApps) {
@@ -287,6 +299,56 @@ class SnRegister extends React.Component {
             onError={errors => console.log(errors)}
           >
             <Grid container spacing={5}>
+            <Grid item xs={12} className="button-grid">
+                {!isRegister && (
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className="btn-20px"
+                    type="button"
+                    onClick={(evt) => this.handleSubmit(evt, 'delete')}
+                    id="btnDelete"
+                    startIcon={<DeleteIcon />}
+                  >
+                    Delete
+                  </Button>
+                )}
+                {(isRegister || edit || true) && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className="btn-20px"
+                    type="submit"
+                    startIcon={<SaveIcon />}
+                  >
+                    Save
+                  </Button>
+                )}
+                {!isRegister && !edit && false && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className="btn-20px"
+                    onClick={this.handleEditBtn}
+                    type="button"
+                    startIcon={<CheckCircleRoundedIcon />}
+                  >
+                    Edit
+                  </Button>
+                )}
+                {!isRegister && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className="btn-20px"
+                    onClick={this.handleDoneBtn}
+                    type="button"
+                    startIcon={<CheckCircleRoundedIcon />}
+                  >
+                    Done
+                  </Button>
+                )}
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   id="title"
@@ -320,11 +382,11 @@ class SnRegister extends React.Component {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  id="fileName"
-                  name="fileName"
+                  id="filename"
+                  name="filename"
                   label="File Name"
                   fullWidth
-                  value={skyapp.fileName}
+                  value={skyapp.filename}
                   autoComplete="off"
                   onChange={this.handleChange}
                 />
@@ -407,6 +469,7 @@ class SnRegister extends React.Component {
                   label="Searchable"
                 />
               </Grid>
+              { !isRegister && (
               <Grid item xs={12} className="button-grid">
                 <TextField
                   id="skyApSecret"
@@ -414,57 +477,11 @@ class SnRegister extends React.Component {
                   label="Enter Secret Key To Edit/Delete Sky App"
                   fullWidth
                   autoComplete="off"
-                  onChange={this.handleSecretFldChange}
+                  onChange={this.handleChange}
                 />
               </Grid>
-              <Grid item xs={12} className="button-grid">
-                {!isRegister && (
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    className="btn-20px"
-                    type="button"
-                    startIcon={<DeleteIcon />}
-                  >
-                    Delete
-                  </Button>
-                )}
-                {(isRegister || edit || true) && (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className="btn-20px"
-                    type="submit"
-                    startIcon={<SaveIcon />}
-                  >
-                    Save
-                  </Button>
-                )}
-                {!isRegister && !edit && false && (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className="btn-20px"
-                    onClick={this.handleEditBtn}
-                    type="button"
-                    startIcon={<CheckCircleRoundedIcon />}
-                  >
-                    Edit
-                  </Button>
-                )}
-                {!isRegister && (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className="btn-20px"
-                    onClick={this.handleDoneBtn}
-                    type="button"
-                    startIcon={<CheckCircleRoundedIcon />}
-                  >
-                    Done
-                  </Button>
-                )}
-              </Grid>
+              )}
+              
             </Grid>
           </ValidatorForm>
 
@@ -477,19 +494,49 @@ class SnRegister extends React.Component {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              {"Your App Secret ID"}
+              { isRegister && ("Your App Secret ID")}
+              { !isRegister && ("Change SkyApp")}
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                Your App secret ID is 'aaaa-bbbb-1234'. Please save this ID at a
-                secure place. You will need this ID to be able to make any
-                updates to your SkyApp. You will now be redirected to All Apps
-                page.
+              { isRegister && ("Your App secret ID is 'aaaa-bbbb-1234'. Please save this ID at a secure place. You will need this ID to be able to make any updates to your SkyApp. You will now be redirected to All Apps page.")}
+              { !isRegister && ("Changes to SkyApp is successfull!")}
               </DialogContentText>
             </DialogContent>
             <DialogActions>
               <Button
                 onClick={this.handleSecretIdDlgClose}
+                autoFocus
+                variant="contained"
+                color="primary"
+                className="btn-20px"
+                startIcon={<DoneIcon />}
+              >
+                OK
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+          <Dialog
+            open={openEdtFailDlg}
+            onClose={this.handleEdtFailDlgClose}
+            TransitionComponent={Transition}
+            keepMounted
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Failure!"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                No changes were made to the SkyApp as the Secret provided by you is incorrect.
+                Please retry with correct Sky App Secret to edit/delete.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={this.handleEdtFailDlgClose}
                 autoFocus
                 variant="contained"
                 color="primary"

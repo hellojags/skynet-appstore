@@ -125,9 +125,9 @@ class SnCards extends React.Component {
               <div className={'card card-' + app.category.toLowerCase()}>
                 <div className="card-count-container">
                   <h2 className="pl-30"> {app.title} </h2>
-                  <div className="card-count">
+                  {/* <div className="card-count">
                     {RENDER_CATEGORY_LOGO(app.category)}
-                  </div>
+                  </div> */}
                 </div>
   
                 <div className="card-content ">
