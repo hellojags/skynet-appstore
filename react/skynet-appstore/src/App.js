@@ -100,9 +100,9 @@ function App() {
 
       {/* <!-- Nav Item - Tables --> */}
       <li className="nav-item">
-        <NavLink activeClassName="active" className="nav-link" to="/apps/webapp">
+        <NavLink activeClassName="active" className="nav-link" to="/apps/app">
           {RENDER_CATEGORY_LOGO('app')}
-          <span>Webapp</span>
+          <span>App</span>
         </NavLink>
       </li>
     </ul>

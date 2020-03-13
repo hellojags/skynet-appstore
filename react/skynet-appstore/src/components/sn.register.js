@@ -20,9 +20,9 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
-import {Redirect} from "react-router-dom";
-import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { Redirect } from "react-router-dom";
+import CheckCircleRoundedIcon from "@material-ui/icons/CheckCircleRounded";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = theme => ({
   formControl: {
@@ -46,17 +46,19 @@ const emptySkyApp = {
   category: "",
   git_url: "",
   searchable: false,
+  secret_key: "",
   id: ""
 };
 
 const getPageHeader = (isRegister, isEdit) => {
-  if (isRegister){
+  if (isRegister) {
     return <h1 className="h3 mb-0 text-gray-800">Register SkyApp</h1>;
-  } else if (isEdit){
+  } else if (isEdit) {
     return <h1 className="h3 mb-0 text-gray-800">Edit SkyApp</h1>;
-  } else 
-    return <h1 className="h3 mb-0 text-gray-800">View SkyApp</h1>;
-}
+  } else return <h1 className="h3 mb-0 text-gray-800">View SkyApp</h1>;
+};
+
+let appId = "";
 
 class SnRegister extends React.Component {
   constructor(props) {
@@ -68,18 +70,8 @@ class SnRegister extends React.Component {
       edit: false,
       isRegister: false,
       openEnableEditDlg: false,
-      skyAppSecret: '',
-      skyapp: {
-        title: "",
-        description: "",
-        fileName: "",
-        fileformat: "",
-        type: "",
-        category: "",
-        git_url: "",
-        searchable: true,
-        id:''
-      }
+      skyAppSecret: "",
+      skyapp: emptySkyApp
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -89,20 +81,20 @@ class SnRegister extends React.Component {
     this.handleSkyAppSecretChange = this.handleSkyAppSecretChange.bind(this);
     this.handleEnableEditDlgOkBtn = this.handleEnableEditDlgOkBtn.bind(this);
     this.handleEnableEditDlgClose = this.handleEnableEditDlgClose.bind(this);
-
   }
 
-  handleEnableEditDlgClose(){
-    this.setState({openEnableEditDlg: false});
+  handleEnableEditDlgClose() {
+    this.setState({ openEnableEditDlg: false });
   }
 
-  handleEnableEditDlgOkBtn(evt){
-    if (this.state.skyAppSecret && this.state.skyAppSecret.trim()!==''){
+  handleEnableEditDlgOkBtn(evt) {
+    if (this.state.skyAppSecret && this.state.skyAppSecret.trim() !== "") {
       this.setState({
         openEnableEditDlg: false,
         showLoader: true
       });
-      const validateSecretUrl = "http://www.mocky.io/v2/5e5f23ae3100004b00afd966"; //TODO
+      const validateSecretUrl =
+        "http://www.mocky.io/v2/5e5f23ae3100004b00afd966"; //TODO
       fetch(validateSecretUrl, {
         method: "POST",
         body: JSON.stringify({
@@ -116,118 +108,125 @@ class SnRegister extends React.Component {
         .then(res => res.json())
         .then(response => {
           this.setState({
-            showLoader: false,
+            showLoader: false
           });
           response = true; //TODO
-          if (response){
-            this.setState({edit: true});
+          if (response) {
+            this.setState({ edit: true });
           }
-          console.log("this.setState ", this.state.skyapp)
+          console.log("this.setState ", this.state.skyapp);
         });
     }
   }
 
-
-  handleSkyAppSecretChange(evt){
-    this.setState({skyAppSecret : evt.target.value})
+  handleSkyAppSecretChange(evt) {
+    this.setState({ skyAppSecret: evt.target.value });
   }
 
-  handleEditBtn(){
-    this.setState({ 
-      openEnableEditDlg: true 
+  handleEditBtn() {
+    this.setState({
+      openEnableEditDlg: true
     });
   }
 
-  handleDoneBtn(){
-    this.setState({ 
-      redirectToAllApps: true 
+  handleDoneBtn() {
+    this.setState({
+      redirectToAllApps: true
     });
   }
 
-  componentDidMount(){
+  componentDidMount() {
     const path = this.props.match.path;
-    if (path==='/register'){
+    if (path === "/register") {
       this.setState({
         isRegister: true,
         skyapp: emptySkyApp
       });
-      console.log("this.setState ", this.state.skyapp)
+      console.log("this.setState ", this.state.skyapp);
     } else {
-      const {id} = this.props.match.params;
-      console.log("Component mounted : ",id,path, this.props.match);
+      const { id } = this.props.match.params;
+      appId = id;
+      console.log("Component mounted : ", id, path, this.props.match);
       this.setState({
         isRegister: false
       });
-      console.log("this.setState ", this.state.skyapp)
+      console.log("this.setState ", this.state.skyapp);
       this.getSkyAppDetails(id);
     }
   }
 
-  getSkyAppDetails(skyAppId){
+  getSkyAppDetails(skyAppId) {
     this.setState({
       showLoader: true
     });
-    console.log("this.setState ", this.state.skyapp)
-    fetch('http://www.mocky.io/v2/5e5f23ae3100004b00afd966?id='+skyAppId)
-    .then(res => res.json())
-    .then(res => {
-      console.log("obtsined skyap");
-      this.setState({
-        showLoader: false,
-        skyapp: {
-          title: "The Title",
-          description: "This is the description which must be of maximum 200 chars long.",
-          fileName: "the_file",
-          fileformat: "png",
-          type: "20",
-          category: "10",
-          git_url: "https://myurl.github.com",
-          searchable: true,
-          id: 'A001'
-        }
+    console.log("this.setState ", this.state.skyapp);
+    fetch("https://skynethub-api.herokuapp.com/skapps/" + skyAppId)
+      .then(res => res.json())
+      .then(res => {
+        console.log("obtsined skyap", res);
+        this.setState({
+          showLoader: false,
+          skyapp: {
+            title: res.title,
+            description: res.description,
+            fileName: res.filename,
+            fileformat: res.fileformat,
+            type: "20",
+            category: res.category ? res.category.toLowerCase() : "",
+            git_url: res.git_url,
+            searchable: res.searchable == "true",
+            id: res.id
+          }
+        });
+        console.log("this.setState ", this.state.skyapp);
       });
-      console.log("this.setState ", this.state.skyapp)
-    });
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot){
+  componentDidUpdate(prevProps, prevState, snapshot) {
     const path = this.props.match.path;
-     if (path==='/register'){
-       if (!this.state.isRegister){
-         this.setState({
-           isRegister: true,
-           skyapp: emptySkyApp
-         });
-         console.log("this.setState ", this.state.skyapp)
-       }
+    if (path === "/register") {
+      if (!this.state.isRegister) {
+        this.setState({
+          isRegister: true,
+          skyapp: emptySkyApp
+        });
+        console.log("this.setState ", this.state.skyapp);
+      }
       return;
     }
-    const {id} = this.props.match.params;
+    const { id } = this.props.match.params;
+    appId = id;
     console.log("Component updated : ", id, this.props);
     console.log("previous state: ", prevState);
-    if (this.state.isRegister){
+    if (this.state.isRegister) {
       this.setState({
         isRegister: false
       });
-      console.log("this.setState ", this.state.skyapp)
+      console.log("this.setState ", this.state.skyapp);
     }
   }
 
   handleSecretIdDlgClose() {
-    this.setState({ 
+    this.setState({
       openSecretIdDlg: false,
-      redirectToAllApps: true 
+      redirectToAllApps: true
     });
-    console.log("this.setState ", this.state.skyapp)
+    console.log("this.setState ", this.state.skyapp);
   }
 
   handleSubmit(evt) {
     evt.preventDefault();
-    const url = "";
+    let url = "https://skynethub-api.herokuapp.com/skapps/";
+    let apiMethod = "POST";
+
+    if (this.state.edit) {
+      url += appId;
+      apiMethod = "PUT";
+    }
     this.setState({ showLoader: true });
-    console.log("this.setState ", this.state.skyapp)
+    console.log("this.setState ", this.state.skyapp, this.state.isRegister);
     fetch(url, {
-      method: "POST",
+      method: apiMethod,
       body: JSON.stringify(this.state.skyapp),
       headers: {
         "Content-Type": "application/json"
@@ -236,7 +235,7 @@ class SnRegister extends React.Component {
       .then(res => res.json())
       .catch(err => {
         this.setState({ showLoader: false });
-        console.log("this.setState ", this.state.skyapp)
+        console.log("this.setState ", this.state.skyapp);
       })
       .then(response => {
         console.log(response);
@@ -244,7 +243,7 @@ class SnRegister extends React.Component {
           showLoader: false,
           openSecretIdDlg: true
         });
-        console.log("this.setState ", this.state.skyapp)
+        console.log("this.setState ", this.state.skyapp);
       });
   }
 
@@ -262,19 +261,19 @@ class SnRegister extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { 
-      showLoader, 
-      skyapp, 
-      openSecretIdDlg, 
-      redirectToAllApps, 
-      isRegister, 
-      edit, 
-      openEnableEditDlg } = this.state;
+    const {
+      showLoader,
+      skyapp,
+      openSecretIdDlg,
+      redirectToAllApps,
+      isRegister,
+      edit,
+      openEnableEditDlg
+    } = this.state;
 
-    if (redirectToAllApps){
-      return <Redirect to='/apps/all' />;
+    if (redirectToAllApps) {
+      return <Redirect to="/apps/all" />;
     }
-
 
     if (!showLoader) {
       return (
@@ -293,7 +292,6 @@ class SnRegister extends React.Component {
                   id="title"
                   name="title"
                   label="Title"
-                  disabled={!isRegister && !edit}
                   fullWidth
                   value={skyapp.title}
                   autoComplete="off"
@@ -312,7 +310,6 @@ class SnRegister extends React.Component {
                   label="Description"
                   fullWidth
                   value={skyapp.description}
-                  disabled={!isRegister && !edit}
                   autoComplete="off"
                   helperText="Max 200 charecters"
                   onInput={e => {
@@ -328,7 +325,6 @@ class SnRegister extends React.Component {
                   label="File Name"
                   fullWidth
                   value={skyapp.fileName}
-                  disabled={!isRegister && !edit}
                   autoComplete="off"
                   onChange={this.handleChange}
                 />
@@ -340,7 +336,6 @@ class SnRegister extends React.Component {
                   label="File Format"
                   fullWidth
                   value={skyapp.fileformat}
-                  disabled={!isRegister && !edit}
                   autoComplete="off"
                   onChange={this.handleChange}
                 />
@@ -352,7 +347,6 @@ class SnRegister extends React.Component {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     fullWidth
-                    disabled={!isRegister && !edit}
                     value={skyapp.type}
                     name="type"
                     onChange={this.handleChange}
@@ -360,8 +354,8 @@ class SnRegister extends React.Component {
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value={10}>Directory</MenuItem>
-                    <MenuItem value={20}>File</MenuItem>
+                    <MenuItem value="d">Directory</MenuItem>
+                    <MenuItem value="f">File</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -375,18 +369,17 @@ class SnRegister extends React.Component {
                     id="category"
                     fullWidth
                     value={skyapp.category}
-                    disabled={!isRegister && !edit}
                     name="category"
                     onChange={this.handleChange}
                   >
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value={10}>Video</MenuItem>
-                    <MenuItem value={20}>Audio</MenuItem>
-                    <MenuItem value={20}>Blog</MenuItem>
-                    <MenuItem value={20}>Dataset</MenuItem>
-                    <MenuItem value={20}>SkyApp</MenuItem>
+                    <MenuItem value="video">Video</MenuItem>
+                    <MenuItem value="audio">Audio</MenuItem>
+                    <MenuItem value="blog">Blog</MenuItem>
+                    <MenuItem value="data">Dataset</MenuItem>
+                    <MenuItem value="app">SkyApp</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -394,7 +387,6 @@ class SnRegister extends React.Component {
                 <TextField
                   id="git_url"
                   name="git_url"
-                  disabled={!isRegister && !edit}
                   label="Github URL"
                   fullWidth
                   value={skyapp.git_url}
@@ -408,7 +400,6 @@ class SnRegister extends React.Component {
                     <Checkbox
                       color="secondary"
                       name="searchable"
-                      disabled={!isRegister && !edit}
                       checked={skyapp.searchable}
                       onChange={this.handleChange}
                     />
@@ -417,7 +408,28 @@ class SnRegister extends React.Component {
                 />
               </Grid>
               <Grid item xs={12} className="button-grid">
-                { (isRegister || edit) &&
+                <TextField
+                  id="skyApSecret"
+                  name="skyApSecret"
+                  label="Enter Secret Key To Edit/Delete Sky App"
+                  fullWidth
+                  autoComplete="off"
+                  onChange={this.handleSecretFldChange}
+                />
+              </Grid>
+              <Grid item xs={12} className="button-grid">
+                {!isRegister && (
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className="btn-20px"
+                    type="button"
+                    startIcon={<DeleteIcon />}
+                  >
+                    Delete
+                  </Button>
+                )}
+                {(isRegister || edit || true) && (
                   <Button
                     variant="contained"
                     color="primary"
@@ -427,8 +439,8 @@ class SnRegister extends React.Component {
                   >
                     Save
                   </Button>
-                } 
-                { !isRegister && !edit &&
+                )}
+                {!isRegister && !edit && false && (
                   <Button
                     variant="contained"
                     color="primary"
@@ -439,8 +451,8 @@ class SnRegister extends React.Component {
                   >
                     Edit
                   </Button>
-                }
-                { !isRegister && !edit &&
+                )}
+                {!isRegister && (
                   <Button
                     variant="contained"
                     color="primary"
@@ -451,18 +463,7 @@ class SnRegister extends React.Component {
                   >
                     Done
                   </Button>
-                }
-                { edit && !isRegister &&
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    className="btn-20px"
-                    type="button"
-                    startIcon={<DeleteIcon />}
-                  >
-                    Delete
-                  </Button>
-                }
+                )}
               </Grid>
             </Grid>
           </ValidatorForm>
@@ -513,7 +514,8 @@ class SnRegister extends React.Component {
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                Please enter your SkyApp Secret ID to be able to make changes to the SkyApp
+                Please enter your SkyApp Secret ID to be able to make changes to
+                the SkyApp
               </DialogContentText>
               <TextField
                 autoFocus
@@ -538,7 +540,6 @@ class SnRegister extends React.Component {
               </Button>
             </DialogActions>
           </Dialog>
-
         </div>
       );
     } else {

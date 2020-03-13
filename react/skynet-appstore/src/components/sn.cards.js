@@ -8,6 +8,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {RENDER_CATEGORY_LOGO} from "../sn.constants";
 import InfoRoundedIcon from '@material-ui/icons/InfoRounded';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import {Redirect} from "react-router-dom";
 
 function renderPageHeading(category){
@@ -21,7 +22,7 @@ function renderPageHeading(category){
     case 'audio':
       return 'Audio Apps';
       break;
-    case 'webapp':
+    case 'app':
       return 'WebApps';
       break;
     case 'blog':
@@ -61,7 +62,6 @@ class SnCards extends React.Component {
     fetch('https://skynethub-api.herokuapp.com/skapps')
     .then(res => res.json())
     .then((result) => {
-      console.log("SKyapps : ", result);
       this.setState({
         apps : result,
         appsLoaded : true
@@ -78,7 +78,7 @@ class SnCards extends React.Component {
     const {category} = this.props.match.params;
     if (category !== this.state.category){
       this.setState({category});
-      fetch('http://www.mocky.io/v2/5e5f23ae3100004b00afd966?category='+category) //TODO
+      fetch('https://skynethub-api.herokuapp.com/skapps') //TODO
       .then(res => res.json())
       .then((result) => {
         this.setState({
@@ -111,7 +111,15 @@ class SnCards extends React.Component {
           </div>
   
           <div className="card-container row">
-            {apps.map((app, i) => (
+            {apps.filter((app) => {
+              if (category && category.trim()!="" && category.trim()!="all"){
+                if (app.category && app.category.toLowerCase()==category){
+                  return app;
+                }
+              } else {
+                  return app;
+              }
+            }).map((app, i) => (
               <div className="col-md-3 side-padding-0" key={i}>
               {/* <div className="card card-video"> */}
               <div className={'card card-' + app.category.toLowerCase()}>
@@ -127,10 +135,10 @@ class SnCards extends React.Component {
                 </div>
   
                 <div className="card-footer">
-                  
-                  <InfoRoundedIcon 
+                  {RENDER_CATEGORY_LOGO(app.category)}
+                  <EditOutlinedIcon 
                     className="float-right cursor-pointer" 
-                    onClick={() => this.openSkyApp(app.skapp_id)}/>
+                    onClick={() => this.openSkyApp(app.id)}/>
                   {/* <UncontrolledDropdown>
                     <DropdownToggle tag="span" className="cursor-pointer">
                       <InfoRoundedIcon />
