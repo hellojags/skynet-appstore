@@ -3877,6 +3877,7 @@ input[type="button"].btn-block {
 .nav-link {
   display: block;
   padding: 0.5rem 1rem;
+  color: #000;
 }
 
 .nav-link:hover, .nav-link:focus {
@@ -10109,8 +10110,9 @@ a:focus {
   font-weight: 700;
 }
 
-.sidebar .nav-item .nav-link.active {
+.nav-link.active {
   font-weight: 700;
+  background-color: rgba(20, 25, 100, 0.25);
 }
 
 .sidebar .nav-item .collapse {
@@ -10591,6 +10593,7 @@ a:focus {
   padding: 20px;
   padding-top: 0px;
   height: 120px;
+  font-size: 20px;
 }
 
 .card-container .card .card-content > h2 {
@@ -11104,7 +11107,7 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 .register-container {
-  padding-top: 20px;
+  padding-top: 60px;
 }
 
 .select-grid div.MuiFormControl-root{
@@ -11133,5 +11136,9 @@ body.sidebar-toggled footer.sticky-footer {
   margin-left: 50px;
 }
 /* REGISTER CSS END */
+
+.card-parent-conatiner {
+  padding-top: 40px;
+}
 
 /* SKYNET END */

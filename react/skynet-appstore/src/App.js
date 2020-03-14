@@ -2,9 +2,17 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { withStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Search from "@material-ui/icons/Search";
-import TextField from "@material-ui/core/TextField";
+import AppBar from '@material-ui/core/AppBar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
 
 import {
   Route,
@@ -31,8 +39,9 @@ import {
 
 import SNSearchbarComponent from "./components/sn.searchbar.component";
 import SnCards from "./components/sn.cards";
-import { RENDER_CATEGORY_LOGO } from "./sn.constants";
+import { RENDER_CATEGORY_LOGO, CATEGORIES } from "./sn.constants";
 import SnRegister from "./components/sn.register";
+import Drawer from '@material-ui/core/Drawer';
 
 library.add(
   faEnvelope,
@@ -46,13 +55,28 @@ library.add(
   faHeadphones,
   faEllipsisV
 );
+
+const drawerWidth = 240;
 const useStyles = theme => ({
+
   root: {
-    "& > *": {
-      margin: theme.spacing(1),
-      width: 200
-    }
-  }
+    display: 'flex',
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+  toolbar: theme.mixins.toolbar,
 });
 
 class App extends React.Component {
@@ -78,12 +102,66 @@ class App extends React.Component {
   }
 
   render(){
+    const { classes } = this.props;
     const { searchKey } = this.state;
 
     return (
-      <div id="wrapper">
-        <Router>
+      <Router>
+      <div className={classes.root}>
+        <CssBaseline />
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar>
+          <Typography variant="h6" noWrap>
+            Clipped drawer
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        className={classes.drawer}
+        variant="permanent"
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.toolbar} />
+        <List>
+          {['Register'].map((text, index) => (
+              <NavLink
+                activeClassName="active"
+                className="nav-link"
+                to="/register"
+              >
+            <ListItem button key={text}>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+              </NavLink>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          <ListItem button key="Categories">
+              <ListItemText primary="Categories" />
+          </ListItem>
+          {CATEGORIES.map((text, index) => (
+            <NavLink
+            activeClassName="active"
+            className="nav-link"
+            to={"/apps/"+text}
+          >
+            <ListItem button key={text.toUpperCase()}>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text.toUpperCase()} />
+            </ListItem>
+            </NavLink>
+          ))}
+        </List>
+      </Drawer>
+      <main className={classes.content}>
+      <div className={classes.toolbar} >
+        
           <ul
+          hidden
             className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
             id="accordionSidebar"
           >
@@ -197,8 +275,10 @@ class App extends React.Component {
               </Switch>
             </div>
           </div>
-        </Router>
       </div>
+      </main>
+      </div>
+        </Router>
     );
   }
 }

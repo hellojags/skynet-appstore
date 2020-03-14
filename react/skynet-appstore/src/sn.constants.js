@@ -1,6 +1,8 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+export const CATEGORIES = ['all','video', 'audio', 'blog', 'app'];
+
 export const RENDER_CATEGORY_LOGO = (category)=>{
     if(category==='video'){
       return <FontAwesomeIcon icon="video"></FontAwesomeIcon>
