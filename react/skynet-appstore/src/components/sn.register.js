@@ -1,6 +1,7 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import { withStyles } from "@material-ui/core/styles";
@@ -74,7 +75,8 @@ class SnRegister extends React.Component {
       openEnableEditDlg: false,
       skyAppSecret: "",
       openEdtFailDlg: false,
-      skyapp: emptySkyApp
+      skyapp: emptySkyApp,
+      errorObj: this.createEmptyErrObj()
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -85,6 +87,16 @@ class SnRegister extends React.Component {
     this.handleEnableEditDlgOkBtn = this.handleEnableEditDlgOkBtn.bind(this);
     this.handleEnableEditDlgClose = this.handleEnableEditDlgClose.bind(this);
     this.handleEdtFailDlgClose = this.handleEdtFailDlgClose.bind(this);
+  }
+
+  createEmptyErrObj(){
+    const errObj = {};
+    for(const key in emptySkyApp){
+      if (emptySkyApp.hasOwnProperty(key)){
+        errObj[key]= false;
+      }
+    }
+    return errObj;
   }
 
   handleEdtFailDlgClose() {
@@ -226,6 +238,15 @@ class SnRegister extends React.Component {
 
   handleSubmit(evt, param) {
     evt.preventDefault();
+    let isError = false;
+    for(const key in this.state.skyapp){
+      if (this.state.skyapp.hasOwnProperty(key)){
+        isError = isError | this.validateField(key)
+      }
+    }
+    if (isError){
+      return;
+    }
     let url = "https://skynethub-api.herokuapp.com/skapps/";
     let apiMethod = "POST";
     console.log(param);
@@ -280,16 +301,35 @@ class SnRegister extends React.Component {
       });
   }
 
+  validateField(fieldName){
+    const { errorObj } = this.state;
+    const fieldVal = this.state.skyapp[fieldName];
+    let isError = false;
+    switch(fieldName){
+      case "title": 
+      case "description":
+      case "category":
+        errorObj[fieldName] = (fieldVal==null || fieldVal.trim()=="");
+        isError= errorObj[fieldName];
+        this.setState({errorObj});
+        break;
+      default:
+    }
+    return isError;
+  }
+
   handleChange(evt) {
     console.log(evt.target.type);
     const eleType = evt.target.type;
     const { skyapp } = this.state;
+    const fieldName = evt.target.name;
     if (eleType === "checkbox") {
-      skyapp[evt.target.name] = evt.target.checked;
+      skyapp[fieldName] = evt.target.checked;
     } else {
-      skyapp[evt.target.name] = evt.target.value;
+      skyapp[fieldName] = evt.target.value;
     }
     this.setState({ skyapp });
+    this.validateField(fieldName);
   }
 
   render() {
@@ -302,7 +342,8 @@ class SnRegister extends React.Component {
       isRegister,
       edit,
       openEnableEditDlg,
-      openEdtFailDlg
+      openEdtFailDlg,
+      errorObj
     } = this.state;
 
     if (redirectToAllApps) {
@@ -377,11 +418,11 @@ class SnRegister extends React.Component {
                   name="title"
                   label="Title"
                   fullWidth
+                  error={errorObj.title}
                   value={skyapp.title}
                   autoComplete="off"
-                  helperText="Max 15 charecters"
-                  validators={["required"]}
                   onChange={this.handleChange}
+                  helperText={errorObj.title ? 'Title is a mandatory field.' : 'Max 15 characters.'}
                   onInput={e => {
                     e.target.value = e.target.value.slice(0, 15);
                   }}
@@ -392,10 +433,11 @@ class SnRegister extends React.Component {
                   id="description"
                   name="description"
                   label="Description"
+                  error={errorObj.description}
                   fullWidth
                   value={skyapp.description}
                   autoComplete="off"
-                  helperText="Max 200 charecters"
+                  helperText={errorObj.description ? 'Title is a mandatory field.' : 'Max 200 charecters'}
                   onInput={e => {
                     e.target.value = e.target.value.slice(0, 200);
                   }}
@@ -444,7 +486,9 @@ class SnRegister extends React.Component {
                 </FormControl>
               </Grid>
               <Grid item xs={6} className="select-grid">
-                <FormControl className={classes.formControl}>
+                <FormControl className={classes.formControl}
+                  error={errorObj.category}
+                  >
                   <InputLabel id="demo-simple-select-label">
                     Category
                   </InputLabel>
@@ -464,6 +508,9 @@ class SnRegister extends React.Component {
                       <MenuItem key={index} value={txt}>{txt.toUpperCase()}</MenuItem>
                     ))}
                   </Select>
+                  {errorObj.category && 
+                    <FormHelperText>Please select a category.</FormHelperText>
+                  }
                 </FormControl>
               </Grid>
               <Grid item xs={6}>
