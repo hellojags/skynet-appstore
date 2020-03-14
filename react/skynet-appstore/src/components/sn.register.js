@@ -85,8 +85,8 @@ class SnRegister extends React.Component {
     this.handleEdtFailDlgClose = this.handleEdtFailDlgClose.bind(this);
   }
 
-  handleEdtFailDlgClose(){
-    this.setState({openEdtFailDlg: false});
+  handleEdtFailDlgClose() {
+    this.setState({ openEdtFailDlg: false });
   }
 
   handleEnableEditDlgClose() {
@@ -228,7 +228,7 @@ class SnRegister extends React.Component {
     console.log(param);
     if (!this.state.isRegister) {
       url += appId;
-      if (param=='delete'){
+      if (param == "delete") {
         apiMethod = "DELETE";
       } else {
         apiMethod = "PUT";
@@ -250,8 +250,8 @@ class SnRegister extends React.Component {
       })
       .then(response => {
         console.log(response);
-        if (this.state.isRegister){
-          this.setState({skyapp: response})
+        if (this.state.isRegister) {
+          this.setState({ skyapp: response });
         }
         this.setState({
           showLoader: false,
@@ -302,14 +302,14 @@ class SnRegister extends React.Component {
             onError={errors => console.log(errors)}
           >
             <Grid container spacing={5}>
-            <Grid item xs={12} className="button-grid">
+              <Grid item xs={12} className="button-grid">
                 {!isRegister && (
                   <Button
                     variant="contained"
                     color="secondary"
                     className="btn-20px"
                     type="button"
-                    onClick={(evt) => this.handleSubmit(evt, 'delete')}
+                    onClick={evt => this.handleSubmit(evt, "delete")}
                     id="btnDelete"
                     startIcon={<DeleteIcon />}
                   >
@@ -472,19 +472,18 @@ class SnRegister extends React.Component {
                   label="Searchable"
                 />
               </Grid>
-              { !isRegister && (
-              <Grid item xs={12} className="button-grid">
-                <TextField
-                  id="skyApSecret"
-                  name="skyApSecret"
-                  label="Enter Secret Key To Edit/Delete Sky App"
-                  fullWidth
-                  autoComplete="off"
-                  onChange={this.handleChange}
-                />
-              </Grid>
+              {!isRegister && (
+                <Grid item xs={12} className="button-grid">
+                  <TextField
+                    id="skyApSecret"
+                    name="skyApSecret"
+                    label="Enter Secret Key To Edit/Delete Sky App"
+                    fullWidth
+                    autoComplete="off"
+                    onChange={this.handleChange}
+                  />
+                </Grid>
               )}
-              
             </Grid>
           </ValidatorForm>
 
@@ -498,13 +497,16 @@ class SnRegister extends React.Component {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              { isRegister && ("Your App Secret ID")}
-              { !isRegister && ("Change SkyApp")}
+              {isRegister && "Your App Secret ID"}
+              {!isRegister && "Change SkyApp"}
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-              { isRegister && ("Your App secret ID is '" + skyapp.auth_code +"'. Please save this ID at a secure place. You will need this ID to be able to make any updates to your SkyApp. You will now be redirected to All Apps page.")}
-              { !isRegister && ("Changes to SkyApp is successfull!")}
+                {isRegister &&
+                  "Your App secret ID is '" +
+                    skyapp.auth_code +
+                    "'. Please save this ID at a secure place. You will need this ID to be able to make any updates to your SkyApp. You will now be redirected to All Apps page."}
+                {!isRegister && "Changes to SkyApp is successfull!"}
               </DialogContentText>
             </DialogContent>
             <DialogActions>
@@ -529,13 +531,12 @@ class SnRegister extends React.Component {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
-            <DialogTitle id="alert-dialog-title">
-              {"Failure!"}
-            </DialogTitle>
+            <DialogTitle id="alert-dialog-title">{"Failure!"}</DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                No changes were made to the SkyApp as the Secret provided by you is incorrect.
-                Please retry with correct Sky App Secret to edit/delete.
+                No changes were made to the SkyApp as the Secret provided by you
+                is incorrect. Please retry with correct Sky App Secret to
+                edit/delete.
               </DialogContentText>
             </DialogContent>
             <DialogActions>
