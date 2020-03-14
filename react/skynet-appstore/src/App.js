@@ -42,6 +42,7 @@ import SnCards from "./components/sn.cards";
 import { RENDER_CATEGORY_LOGO, CATEGORIES } from "./sn.constants";
 import SnRegister from "./components/sn.register";
 import Drawer from '@material-ui/core/Drawer';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 
 library.add(
   faEnvelope,
@@ -132,7 +133,7 @@ class App extends React.Component {
                 to="/register"
               >
             <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemIcon><AddBoxIcon /></ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
               </NavLink>
@@ -150,7 +151,7 @@ class App extends React.Component {
             to={"/apps/"+text}
           >
             <ListItem button key={text.toUpperCase()}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemIcon>{RENDER_CATEGORY_LOGO(text)}</ListItemIcon>
               <ListItemText primary={text.toUpperCase()} />
             </ListItem>
             </NavLink>
@@ -159,106 +160,6 @@ class App extends React.Component {
       </Drawer>
       <main className={classes.content}>
       <div className={classes.toolbar} >
-        
-          <ul
-          hidden
-            className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
-            id="accordionSidebar"
-          >
-            <a
-              className="sidebar-brand d-flex align-items-center justify-content-center"
-              href="index.html"
-            >
-              <div className="d-none sidebar-brand-icon rotate-n-15">
-                <FontAwesomeIcon icon="laugh-wink"></FontAwesomeIcon>
-              </div>
-              <div className="sidebar-brand-text mx-3">SKYNET STORE</div>
-            </a>
-  
-            <hr className="sidebar-divider my-0" />
-  
-            <li className="nav-item">
-              <NavLink
-                activeClassName="active"
-                className="nav-link"
-                to="/register"
-              >
-                <FontAwesomeIcon icon="fan"></FontAwesomeIcon>
-                <span>Register</span>
-              </NavLink>
-            </li>
-  
-            {/* <li className="nav-item">
-            <NavLink activeClassName="active" className="nav-link" to="/contact">
-              <FontAwesomeIcon icon="cloud-upload-alt"></FontAwesomeIcon>
-              <span>Upload</span>
-            </NavLink>  
-          </li> */}
-  
-            <hr className="sidebar-divider" />
-  
-            {/* <!-- Heading --> */}
-            <div className="sidebar-heading">Categories</div>
-  
-            <li className="nav-item">
-              <NavLink
-                activeClassName="active"
-                className="nav-link"
-                to="/apps/all"
-              >
-                <FontAwesomeIcon icon="star"></FontAwesomeIcon>
-                <span>All</span>
-              </NavLink>
-            </li>
-  
-            <li className="nav-item">
-              <NavLink
-                activeClassName="active"
-                className="nav-link"
-                to="/apps/video"
-              >
-                {RENDER_CATEGORY_LOGO("video")}
-                <span>Videos</span>
-              </NavLink>
-            </li>
-  
-            {/* <!-- Nav Item - Tables --> */}
-            <li className="nav-item">
-              <NavLink
-                activeClassName="active"
-                className="nav-link"
-                to="/apps/audio"
-              >
-                {RENDER_CATEGORY_LOGO("audio")}
-                <span>Audio</span>
-              </NavLink>
-            </li>
-  
-            {/* <!-- Nav Item - Tables --> */}
-            <li className="nav-item">
-              <NavLink
-                activeClassName="active"
-                className="nav-link"
-                to="/apps/blog"
-              >
-                {RENDER_CATEGORY_LOGO("blog")}
-                <span>Blog</span>
-              </NavLink>
-            </li>
-  
-            {/* <!-- Nav Item - Tables --> */}
-            <li className="nav-item">
-              <NavLink
-                activeClassName="active"
-                className="nav-link"
-                to="/apps/app"
-              >
-                {RENDER_CATEGORY_LOGO("app")}
-                <span>App</span>
-              </NavLink>
-            </li>
-          </ul>
-  
           <div id="content-wrapper" className="d-flex flex-column">
             <div id="content">
               
