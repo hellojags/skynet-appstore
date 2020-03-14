@@ -13,6 +13,7 @@ import { Redirect } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Search from "@material-ui/icons/Search";
 import TextField from "@material-ui/core/TextField";
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
 function renderPageHeading(category) {
   switch (category) {
@@ -51,6 +52,11 @@ class SnCards extends React.Component {
     this.openSkyApp = this.openSkyApp.bind(this);
     this.handleSrchSbmt = this.handleSrchSbmt.bind(this);
     this.handleSrchKeyChng = this.handleSrchKeyChng.bind(this);
+    this.launchSkyLink = this.launchSkyLink.bind(this);
+  }
+
+  launchSkyLink(skyLink){
+    window.open('https://'+skyLink, '_blank');
   }
 
   handleSrchSbmt(evt){
@@ -256,16 +262,11 @@ class SnCards extends React.Component {
                           className="float-right cursor-pointer"
                           onClick={() => this.openSkyApp(app.id)}
                         />
-                        {/* <UncontrolledDropdown>
-                    <DropdownToggle tag="span" className="cursor-pointer">
-                      <InfoRoundedIcon />
-                    </DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem>Action</DropdownItem>
-                      <DropdownItem>Action</DropdownItem>
-                      <DropdownItem>Action</DropdownItem>
-                    </DropdownMenu>
-                  </UncontrolledDropdown> */}
+                        {app.skylink && app.skylink.trim()!="" && 
+                        <OpenInNewIcon 
+                          className="float-right cursor-pointer margin-right-20"
+                          onClick={() => { this.launchSkyLink(app.skylink)}}/>
+                        }
                       </div>
                     </div>
                   </div>

@@ -23,7 +23,7 @@ import Slide from "@material-ui/core/Slide";
 import { Redirect } from "react-router-dom";
 import CheckCircleRoundedIcon from "@material-ui/icons/CheckCircleRounded";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { WEBSERVICE_SUCCESS } from "../sn.constants";
+import { WEBSERVICE_SUCCESS, CATEGORIES } from "../sn.constants";
 import { WEBSERVICE_FAILURE } from "../sn.constants";
 
 const useStyles = theme => ({
@@ -459,10 +459,10 @@ class SnRegister extends React.Component {
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value="video">Video</MenuItem>
-                    <MenuItem value="audio">Audio</MenuItem>
-                    <MenuItem value="blog">Blog</MenuItem>
-                    <MenuItem value="app">SkyApp</MenuItem>
+                    {CATEGORIES.filter(category => category!='all' ? category: '')
+                    .map((txt, index) => (
+                      <MenuItem key={index} value={txt}>{txt.toUpperCase()}</MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Grid>
