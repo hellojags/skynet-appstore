@@ -136,7 +136,7 @@ class SnCards extends React.Component {
     }
     if (appsLoaded) {
       return (
-        <div class="card-parent-conatiner">
+        <div className="card-parent-conatiner">
           <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
             <button
               id="sidebarToggleTop"
