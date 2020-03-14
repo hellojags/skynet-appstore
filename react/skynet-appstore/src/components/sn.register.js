@@ -250,6 +250,9 @@ class SnRegister extends React.Component {
       })
       .then(response => {
         console.log(response);
+        if (this.state.isRegister){
+          this.setState({skyapp: response})
+        }
         this.setState({
           showLoader: false,
           openSecretIdDlg: true
@@ -490,6 +493,7 @@ class SnRegister extends React.Component {
             onClose={this.handleSecretIdDlgClose}
             TransitionComponent={Transition}
             keepMounted
+            maxWidth="lg"
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
@@ -499,7 +503,7 @@ class SnRegister extends React.Component {
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-              { isRegister && ("Your App secret ID is 'aaaa-bbbb-1234'. Please save this ID at a secure place. You will need this ID to be able to make any updates to your SkyApp. You will now be redirected to All Apps page.")}
+              { isRegister && ("Your App secret ID is '" + skyapp.auth_code +"'. Please save this ID at a secure place. You will need this ID to be able to make any updates to your SkyApp. You will now be redirected to All Apps page.")}
               { !isRegister && ("Changes to SkyApp is successfull!")}
               </DialogContentText>
             </DialogContent>

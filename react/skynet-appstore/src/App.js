@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "./logo.svg";
-import skyapplogo from "./distributed.png";
+import skyapplogo from "./logo_small.png";
 import "./App.css";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from '@material-ui/core/AppBar';
@@ -111,11 +111,10 @@ class App extends React.Component {
       <Router>
       <div className={classes.root}>
         <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar position="fixed" className={classes.appBar} color="inherit">
         <Toolbar>
           <Typography variant="h6" noWrap>
-            <img src={skyapplogo} alt="SkyApp Logo" className="skyapp-logo"></img>
-            SkyApp Store
+            <img src={skyapplogo} alt="SkyApp Logo"></img>
           </Typography>
         </Toolbar>
       </AppBar>
