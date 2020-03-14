@@ -130,6 +130,7 @@ class App extends React.Component {
         <List>
           {['Register'].map((text, index) => (
               <NavLink
+                key={index}
                 activeClassName="active"
                 className="nav-link"
                 to="/register"
@@ -148,6 +149,7 @@ class App extends React.Component {
           </ListItem>
           {CATEGORIES.map((text, index) => (
             <NavLink
+            key={index}
             activeClassName="active"
             className="nav-link"
             to={"/apps/"+text}
