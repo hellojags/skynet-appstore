@@ -10619,6 +10619,10 @@ a:focus {
   background-image: linear-gradient(90deg, #fec22f, #ea9826);
 }
 
+.card-container .card-other .card-count, .card-container .card-other .card-footer {
+  background-image: linear-gradient(90deg, #fe2f90, #48001e);
+}
+
 .card-container .card-blog .card-count, .card-container .card-blog .card-footer {
   background-image: linear-gradient(90deg, #6fc6a9, #058ba9);
 }
