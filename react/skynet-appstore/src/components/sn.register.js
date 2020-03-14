@@ -23,6 +23,8 @@ import Slide from "@material-ui/core/Slide";
 import { Redirect } from "react-router-dom";
 import CheckCircleRoundedIcon from "@material-ui/icons/CheckCircleRounded";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { WEBSERVICE_SUCCESS } from "../sn.constants";
+import { WEBSERVICE_FAILURE } from "../sn.constants";
 
 const useStyles = theme => ({
   formControl: {
@@ -46,7 +48,7 @@ const emptySkyApp = {
   category: "",
   git_url: "",
   searchable: false,
-  secret_key: "",
+  auth_code: "",
   id: ""
 };
 
@@ -168,6 +170,7 @@ class SnRegister extends React.Component {
     console.log("this.setState ", this.state.skyapp);
     fetch("https://skynethub-api.herokuapp.com/skapps/" + skyAppId)
       .then(res => res.json())
+      .then(res=> res.hasOwnProperty('status') ? res.result : res)
       .then(res => {
         console.log("obtsined skyap", res);
         this.setState({
@@ -243,21 +246,37 @@ class SnRegister extends React.Component {
         "Content-Type": "application/json"
       }
     })
-      .then(res => res.json())
+      .then(res => {
+        console.log(res.status);
+        if (res.status!=200 && res.status!=201){
+          return {
+            status : WEBSERVICE_FAILURE
+          }
+        }
+        return res.json();
+      })
       .catch(err => {
         this.setState({ showLoader: false });
         console.log("this.setState ", this.state.skyapp);
       })
       .then(response => {
         console.log(response);
-        if (this.state.isRegister) {
-          this.setState({ skyapp: response });
+        const status = response.status;
+        if (status.toLowerCase()==WEBSERVICE_SUCCESS){
+          if (this.state.isRegister) {
+            this.setState({ skyapp: response.result });
+          }
+          this.setState({
+            showLoader: false,
+            openSecretIdDlg: true
+          });
+          console.log("this.setState ", this.state.skyapp);
+        } else {
+          this.setState({
+            openEdtFailDlg: true,
+            showLoader: false
+          })
         }
-        this.setState({
-          showLoader: false,
-          openSecretIdDlg: true
-        });
-        console.log("this.setState ", this.state.skyapp);
       });
   }
 
@@ -443,7 +462,6 @@ class SnRegister extends React.Component {
                     <MenuItem value="video">Video</MenuItem>
                     <MenuItem value="audio">Audio</MenuItem>
                     <MenuItem value="blog">Blog</MenuItem>
-                    <MenuItem value="data">Dataset</MenuItem>
                     <MenuItem value="app">SkyApp</MenuItem>
                   </Select>
                 </FormControl>
@@ -475,8 +493,8 @@ class SnRegister extends React.Component {
               {!isRegister && (
                 <Grid item xs={12} className="button-grid">
                   <TextField
-                    id="skyApSecret"
-                    name="skyApSecret"
+                    id="auth_code"
+                    name="auth_code"
                     label="Enter Secret Key To Edit/Delete Sky App"
                     fullWidth
                     autoComplete="off"

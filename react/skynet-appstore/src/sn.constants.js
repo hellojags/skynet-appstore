@@ -19,3 +19,6 @@ export const RENDER_CATEGORY_LOGO = (category)=>{
       return <AppsIcon />
     }
   }
+
+export const WEBSERVICE_SUCCESS='success';
+export const WEBSERVICE_FAILURE='failure';

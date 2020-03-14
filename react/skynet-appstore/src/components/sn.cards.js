@@ -85,46 +85,36 @@ class SnCards extends React.Component {
     });
   }
 
+  getAppList(){
+    fetch("https://skynethub-api.herokuapp.com/skapps")
+    .then(res => res.json())
+    .then(res=> res.hasOwnProperty('status') ? res.result : res)
+    .then(
+      result => {
+        this.setState({
+          apps: result,
+          appsLoaded: true
+        });
+      },
+      error => {
+        this.setState({
+          error
+        });
+      }
+    );
+  }
+
   componentDidMount() {
     const { category } = this.props.match.params;
     this.setState({ category });
-    //fetch('http://www.mocky.io/v2/5e5f23ae3100004b00afd966?category='+category) // videos : http://www.mocky.io/v2/5e60819a330000800097b99e
-    fetch("https://skynethub-api.herokuapp.com/skapps")
-      .then(res => res.json())
-      .then(
-        result => {
-          this.setState({
-            apps: result,
-            appsLoaded: true
-          });
-        },
-        error => {
-          this.setState({
-            error
-          });
-        }
-      );
+    this.getAppList();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { category } = this.props.match.params;
     if (category !== this.state.category) {
       this.setState({ category });
-      fetch("https://skynethub-api.herokuapp.com/skapps") //TODO
-        .then(res => res.json())
-        .then(
-          result => {
-            this.setState({
-              apps: result,
-              appsLoaded: true
-            });
-          },
-          error => {
-            this.setState({
-              error
-            });
-          }
-        );
+      this.getAppList();
     }
   }
 
