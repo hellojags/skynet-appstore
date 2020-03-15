@@ -10593,7 +10593,7 @@ a:focus {
   padding: 20px;
   padding-top: 0px;
   height: 120px;
-  font-size: 20px;
+  font-size: 17px;
 }
 
 .card-container .card .card-content > h2 {
@@ -11151,5 +11151,9 @@ body.sidebar-toggled footer.sticky-footer {
 
 .margin-right-20 {
   margin-right: 20px;
+}
+
+.cursor-auto {
+  cursor: auto !important;
 }
 /* SKYNET END */

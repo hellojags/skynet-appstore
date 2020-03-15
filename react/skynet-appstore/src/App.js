@@ -85,10 +85,17 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state ={
-      searchKey: ''
+      searchKey: '',
+      goToAllApps: false
     };
     this.handleSrchSbmt = this.handleSrchSbmt.bind(this);
+    this.handleLogoClick = this.handleLogoClick.bind(this);
     this.handleSrchKeyChng = this.handleSrchKeyChng.bind(this);
+  }
+
+  handleLogoClick(evt){
+    evt.preventDefault();
+    window.open("/","_self");
   }
 
   handleSrchSbmt(evt){
@@ -105,7 +112,7 @@ class App extends React.Component {
 
   render(){
     const { classes } = this.props;
-    const { searchKey } = this.state;
+    const { searchKey, goToAllApps } = this.state;
 
     return (
       <Router>
@@ -114,7 +121,9 @@ class App extends React.Component {
       <AppBar position="fixed" className={classes.appBar} color="inherit">
         <Toolbar>
           <Typography variant="h6" noWrap>
-            <img src={skyapplogo} alt="SkynetHub Logo"></img>
+            <img src={skyapplogo} alt="SkynetHub Logo"
+              onClick={this.handleLogoClick}></img>
+            {goToAllApps && <Redirect to={"/"} />}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -143,7 +152,7 @@ class App extends React.Component {
         </List>
         <Divider />
         <List>
-          <ListItem button key="Categories">
+          <ListItem button key="Categories" className="cursor-auto">
               <ListItemText primary="Categories" />
           </ListItem>
           {CATEGORIES.map((text, index) => (
