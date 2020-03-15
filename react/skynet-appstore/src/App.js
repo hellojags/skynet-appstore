@@ -3,17 +3,17 @@ import logo from "./logo.svg";
 import skyapplogo from "./logo_small.png";
 import "./App.css";
 import { withStyles } from "@material-ui/core/styles";
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import AppBar from "@material-ui/core/AppBar";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Toolbar from "@material-ui/core/Toolbar";
+import List from "@material-ui/core/List";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
+import MailIcon from "@material-ui/icons/Mail";
 
 import {
   Route,
@@ -42,8 +42,8 @@ import SNSearchbarComponent from "./components/sn.searchbar.component";
 import SnCards from "./components/sn.cards";
 import { RENDER_CATEGORY_LOGO, CATEGORIES } from "./sn.constants";
 import SnRegister from "./components/sn.register";
-import Drawer from '@material-ui/core/Drawer';
-import AddBoxIcon from '@material-ui/icons/AddBox';
+import Drawer from "@material-ui/core/Drawer";
+import AddBoxIcon from "@material-ui/icons/AddBox";
 
 library.add(
   faEnvelope,
@@ -60,132 +60,134 @@ library.add(
 
 const drawerWidth = 240;
 const useStyles = theme => ({
-
   root: {
-    display: 'flex',
+    display: "flex"
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
+    zIndex: theme.zIndex.drawer + 1
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0,
+    flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: drawerWidth
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(3)
   },
-  toolbar: theme.mixins.toolbar,
+  toolbar: theme.mixins.toolbar
 });
 
 class App extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state ={
-      searchKey: '',
+    this.state = {
+      searchKey: ""
     };
     this.handleSrchSbmt = this.handleSrchSbmt.bind(this);
     this.handleSrchKeyChng = this.handleSrchKeyChng.bind(this);
   }
 
-  handleSrchSbmt(evt){
+  handleSrchSbmt(evt) {
     evt.preventDefault();
     console.log("search form submitted");
   }
 
-  handleSrchKeyChng(evt){
+  handleSrchKeyChng(evt) {
     evt.preventDefault();
     this.setState({
       searchKey: evt.target.value
-    })
+    });
   }
 
-  render(){
+  render() {
     const { classes } = this.props;
     const { searchKey } = this.state;
 
     return (
       <Router>
-      <div className={classes.root}>
-        <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar} color="inherit">
-        <Toolbar>
-          <Typography variant="h6" noWrap>
-            <NavLink to="/">
-            <img src={skyapplogo} alt="SkynetHub Logo"
-              className="cursor-pointer"></img>
-              </NavLink>
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.toolbar} />
-        <List>
-          {['Register'].map((text, index) => (
-              <NavLink
-                key={index}
-                activeClassName="active"
-                className="nav-link"
-                to="/register"
-              >
-            <ListItem button key={text}>
-              <ListItemIcon><AddBoxIcon /></ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-              </NavLink>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          <ListItem button key="Categories" className="cursor-auto">
-              <ListItemText primary="Categories" />
-          </ListItem>
-          {CATEGORIES.map((text, index) => (
-            <NavLink
-            key={index}
-            activeClassName="active"
-            className="nav-link"
-            to={"/apps/"+text}
+        <div className={classes.root}>
+          <CssBaseline />
+          <AppBar position="fixed" className={classes.appBar} color="inherit">
+            <Toolbar>
+              <Typography variant="h6" noWrap>
+                <NavLink to="/">
+                  <img
+                    src={skyapplogo}
+                    alt="SkynetHub Logo"
+                    className="cursor-pointer"
+                  ></img>
+                </NavLink>
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <Drawer
+            className={classes.drawer}
+            variant="permanent"
+            classes={{
+              paper: classes.drawerPaper
+            }}
           >
-            <ListItem button key={text.toUpperCase()}>
-              <ListItemIcon>{RENDER_CATEGORY_LOGO(text)}</ListItemIcon>
-              <ListItemText primary={text.toUpperCase()} />
-            </ListItem>
-            </NavLink>
-          ))}
-        </List>
-      </Drawer>
-      <main className={classes.content}>
-      <div className={classes.toolbar} >
-          <div id="content-wrapper" className="d-flex flex-column">
-            <div id="content">
-              
-  
-              <Switch>
-                <Route exact path="/">
-                  <Redirect to="/apps/all" />
-                </Route>
-                <Route path="/register" component={SnRegister} />
-                <Route path="/apps/:category" component={SnCards} />
-                <Route path="/skyapps/:id" component={SnRegister} />
-                <Route path="/contact" component={SNSearchbarComponent} />
-                <Route component={SNSearchbarComponent} />
-              </Switch>
+            <div className={classes.toolbar} />
+            <List>
+              {["Register"].map((text, index) => (
+                <NavLink
+                  key={index}
+                  activeClassName="active"
+                  className="nav-link"
+                  to="/register"
+                >
+                  <ListItem button key={text}>
+                    <ListItemIcon>
+                      <AddBoxIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                  </ListItem>
+                </NavLink>
+              ))}
+            </List>
+            <Divider />
+            <List>
+              <ListItem button key="Categories" className="cursor-auto">
+                <ListItemText primary="Categories" />
+              </ListItem>
+              {CATEGORIES.map((text, index) => (
+                <NavLink
+                  key={index}
+                  activeClassName="active"
+                  className="nav-link"
+                  to={"/apps/" + text}
+                >
+                  <ListItem button key={text.toUpperCase()}>
+                    <ListItemIcon>{RENDER_CATEGORY_LOGO(text)}</ListItemIcon>
+                    <ListItemText primary={text.toUpperCase()} />
+                  </ListItem>
+                </NavLink>
+              ))}
+            </List>
+          </Drawer>
+          <main className={classes.content}>
+            <div className={classes.toolbar}>
+              <div id="content-wrapper" className="d-flex flex-column">
+                <div id="content">
+                  <Switch>
+                    <Route exact path="/">
+                      <Redirect to="/apps/all" />
+                    </Route>
+                    <Route path="/register" component={SnRegister} />
+                    <Route path="/apps/:category" component={SnCards} />
+                    <Route path="/skyapps/:id" component={SnRegister} />
+                    <Route path="/contact" component={SNSearchbarComponent} />
+                    <Route component={SNSearchbarComponent} />
+                  </Switch>
+                </div>
+              </div>
             </div>
-          </div>
-      </div>
-      </main>
-      </div>
-        </Router>
+          </main>
+        </div>
+      </Router>
     );
   }
 }
