@@ -11168,7 +11168,8 @@ body.sidebar-toggled footer.sticky-footer {
 
 .banner-text {
   font-size: 30px;
-  color: #078007;
+  color: #33b05d;
   text-align: center;
+  font-weight: bold;
 }
 /* SKYNET END */
