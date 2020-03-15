@@ -462,18 +462,19 @@ class SnRegister extends React.Component {
                 <TextField
                   id="skylink"
                   name="skylink"
-                  label="Skynet App - Skylink (46 character without sia://)*"
+                  label="Skynet App - Skylink URL*"
                   error={errorObj.description}
                   fullWidth
                   value={skyapp.skylink}
                   autoComplete="off"
-                  helperText={errorObj.description ? 'Skylink is a mandatory field.' : 'Max 46 characters. This is a mandatory field.'}
+                  helperText={errorObj.description ? 'Skylink URL is a mandatory field.' : 'Example: https://siasky.net/EADCbQJDO8cFkf-fawBrKI56uOdrdIVwMQIpgsIiLSdE5A'}
                   onInput={e => {
                     e.target.value = e.target.value.slice(0, 46);
                   }}
                   onChange={this.handleChange}
                 />
               </Grid>
+              {/*
               <Grid item xs={10}>
                 <TextField
                   id="portal"
@@ -489,7 +490,7 @@ class SnRegister extends React.Component {
                   onChange={this.handleChange}
                 />
               </Grid>
-              {/* <Grid item xs={6}>
+               <Grid item xs={6}>
                 <TextField
                   id="filename"
                   name="filename"
