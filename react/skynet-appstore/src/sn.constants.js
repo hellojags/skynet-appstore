@@ -8,7 +8,7 @@ import MenuBookTwoToneIcon from '@material-ui/icons/MenuBookTwoTone';
 import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
 import LanguageOutlinedIcon from '@material-ui/icons/LanguageOutlined';
 
-export const CATEGORIES = ['all','video', 'audio', 'blog', 'games', 'other', 'books', 'pictures', 'skynetportal'];
+export const CATEGORIES = ['all','video', 'audio', 'blog', 'games', 'books', 'pictures', 'skynetportal', 'other'];
 
 export const RENDER_CATEGORY_LOGO = (category)=>{
     if (category==='all'){

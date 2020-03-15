@@ -168,7 +168,7 @@ class App extends React.Component {
             </List>
             <Divider />
             <List>
-              <ListItem button key="Categories" className="cursor-auto">
+              <ListItem button key="Categories" className="cursor-auto vertical-padding-0">
                 <ListItemText primary="Categories" />
               </ListItem>
               {CATEGORIES.map((text, index) => (

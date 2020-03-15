@@ -11172,4 +11172,18 @@ body.sidebar-toggled footer.sticky-footer {
   text-align: center;
   font-weight: bold;
 }
+a.nav-link {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+a.nav-link div.MuiButtonBase-root.MuiListItem-root.MuiListItem-gutters.MuiListItem-button{
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+vertical-padding-0 {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
 /* SKYNET END */

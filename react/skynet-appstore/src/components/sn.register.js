@@ -56,7 +56,7 @@ const emptySkyApp = {
 
 const getPageHeader = (isRegister, isEdit) => {
   if (isRegister) {
-    return <h1 className="h3 mb-0 text-gray-800">Register Skynet App (Skapp)</h1>;
+    return <h1 className="h3 mb-0 text-gray-800">Register Skapp</h1>;
   } else if (isEdit) {
     return <h1 className="h3 mb-0 text-gray-800">Edit Skapp</h1>;
   } else return <h1 className="h3 mb-0 text-gray-800">View Skapp</h1>;
@@ -371,7 +371,7 @@ class SnRegister extends React.Component {
             onError={errors => console.log(errors)}
           >
           
-            <Grid container spacing={3}>
+            <Grid container spacing={1}>
             <Grid item xs={3}>
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
             {getPageHeader(isRegister, edit)}
@@ -478,12 +478,11 @@ class SnRegister extends React.Component {
                 <TextField
                   id="portal"
                   name="portal"
-                  label="WebApp URL*"
-                  error={errorObj.description}
+                  label="WebApp URL"
                   fullWidth
                   value={skyapp.skylink}
                   autoComplete="off"
-                  helperText={errorObj.description ? 'WebApp url is a mandatory field.' : 'Example: https://skynethub.io/{skylink}, https://mywebsite.com.  This is a mandatory field.'}
+                  helperText={errorObj.description ? '' : 'Example: https://skynethub.io/{skylink}, https://mywebsite.com.  This is a mandatory field.'}
                   onInput={e => {
                     e.target.value = e.target.value.slice(0, 46);
                   }}
