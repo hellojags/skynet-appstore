@@ -321,6 +321,7 @@ class SnRegister extends React.Component {
       case "title": 
       case "description":
       case "category":
+      case "skylink":
         errorObj[fieldName] = (fieldVal==null || fieldVal.trim()=="");
         isError= errorObj[fieldName];
         this.setState({errorObj});
@@ -463,11 +464,11 @@ class SnRegister extends React.Component {
                   id="skylink"
                   name="skylink"
                   label="Skynet App - Skylink URL*"
-                  error={errorObj.description}
+                  error={errorObj.skylink}
                   fullWidth
                   value={skyapp.skylink}
                   autoComplete="off"
-                  helperText={errorObj.description ? 'Skylink URL is a mandatory field.' : 'Example: https://siasky.net/EADCbQJDO8cFkf-fawBrKI56uOdrdIVwMQIpgsIiLSdE5A'}
+                  helperText={errorObj.skylink ? 'Skylink URL is a mandatory field.' : 'Example: https://siasky.net/EADCbQJDO8cFkf-fawBrKI56uOdrdIVwMQIpgsIiLSdE5A'}
                   onInput={e => {
                     e.target.value = e.target.value.slice(0, 46);
                   }}
