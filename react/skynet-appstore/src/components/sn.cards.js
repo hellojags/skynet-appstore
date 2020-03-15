@@ -13,7 +13,7 @@ import { Redirect } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Search from "@material-ui/icons/Search";
 import TextField from "@material-ui/core/TextField";
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 
 function renderPageHeading(category) {
   switch (category) {
@@ -30,11 +30,11 @@ function renderPageHeading(category) {
       return "Web Apps";
       break;
     case "games":
-        return "Games";
-        break;
+      return "Games";
+      break;
     case "books":
-        return "Books";
-        break;
+      return "Books";
+      break;
     case "blog":
       return "Blogs";
       break;
@@ -53,34 +53,39 @@ class SnCards extends React.Component {
       error: null,
       appsLoaded: false,
       category: null,
-      searchKey: ''
+      searchKey: "",
+      filteredApps: []
     };
     this.openSkyApp = this.openSkyApp.bind(this);
     this.handleSrchSbmt = this.handleSrchSbmt.bind(this);
     this.handleSrchKeyChng = this.handleSrchKeyChng.bind(this);
     this.launchSkyLink = this.launchSkyLink.bind(this);
+    this.getFilteredApps = this.getFilteredApps.bind(this);
   }
 
-  launchSkyLink(skyLink){
-    window.open(skyLink, '_blank');
+  launchSkyLink(skyLink) {
+    window.open(skyLink, "_blank");
   }
 
-  handleSrchSbmt(evt){
+  handleSrchSbmt(evt) {
     evt.preventDefault();
     console.log("search form submitted");
   }
 
-  handleSrchKeyChng(evt){
+  handleSrchKeyChng(evt) {
     evt.preventDefault();
     this.setState({
       searchKey: evt.target.value
-    })
+    });
   }
 
-  searchFilter(skyApp, searchKey){
-    if (searchKey && searchKey.trim()!==""){
-      for (const skyAppKey in skyApp){
-        if (skyApp[skyAppKey] && skyApp[skyAppKey].toLowerCase().equals(searchKey.toLowerCase())){
+  searchFilter(skyApp, searchKey) {
+    if (searchKey && searchKey.trim() !== "") {
+      for (const skyAppKey in skyApp) {
+        if (
+          skyApp[skyAppKey] &&
+          skyApp[skyAppKey].toLowerCase().equals(searchKey.toLowerCase())
+        ) {
           return skyApp;
         }
       }
@@ -97,23 +102,23 @@ class SnCards extends React.Component {
     });
   }
 
-  getAppList(){
+  getAppList() {
     fetch("https://skynethub-api.herokuapp.com/skapps")
-    .then(res => res.json())
-    .then(res=> res.hasOwnProperty('status') ? res.result : res)
-    .then(
-      result => {
-        this.setState({
-          apps: result,
-          appsLoaded: true
-        });
-      },
-      error => {
-        this.setState({
-          error
-        });
-      }
-    );
+      .then(res => res.json())
+      .then(res => (res.hasOwnProperty("status") ? res.result : res))
+      .then(
+        result => {
+          this.setState({
+            apps: result,
+            appsLoaded: true
+          });
+        },
+        error => {
+          this.setState({
+            error
+          });
+        }
+      );
   }
 
   componentDidMount() {
@@ -130,34 +135,54 @@ class SnCards extends React.Component {
     }
   }
 
-  getFilteredApps(){
+  getFilteredApps() {
     const category = this.state.category;
-    this.state.apps
-    .filter(app => {
-      if (
-        category &&
-        category.trim() != "" &&
-        category.trim() != "all"
-      ) {
-        if (
-          app.category &&
-          app.category.toLowerCase() == category
-        ) {
+    const searchKey = this.state.searchKey;
+    const filteredApps = this.state.apps
+      .filter(app => {
+        if (category && category.trim() != "" && category.trim() != "all") {
+          if (app.category && app.category.toLowerCase() == category) {
+            return app;
+          }
+        } else {
           return app;
         }
-      } else {
-        return app;
-      }
-    })
+      })
+      .filter(app => {
+        if (searchKey && searchKey.trim() !== "") {
+          for (const skyAppKey in app) {
+            if (
+              app[skyAppKey] != null &&
+              app[skyAppKey].toLowerCase().indexOf(searchKey.toLowerCase()) > -1
+            ) {
+              return app;
+            }
+          }
+        } else {
+          return app;
+        }
+      });
+    return filteredApps;
   }
 
   render() {
-    const { apps, error, appsLoaded, category, goToApp, skyappId, searchKey } = this.state;
+    const {
+      apps,
+      error,
+      appsLoaded,
+      category,
+      goToApp,
+      skyappId,
+      searchKey,
+      filteredApps
+    } = this.state;
     let cardCount = 0;
     if (goToApp) {
       return <Redirect to={"/skyapps/" + skyappId} />;
     }
     if (appsLoaded) {
+      let filteredApps = this.getFilteredApps();
+      console.log(filteredApps)
       return (
         <div className="card-parent-conatiner">
           <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -190,7 +215,7 @@ class SnCards extends React.Component {
                       variant="filled"
                       className="width-100"
                       onChange={this.handleSrchKeyChng}
-                    /> {cardCount}
+                    />
                   </Grid>
                 </Grid>
               </div>
@@ -235,71 +260,65 @@ class SnCards extends React.Component {
             </ul>
           </nav>
           <div className="container-fluid">
-            <div className="d-sm-flex align-items-center justify-content-between mb-4">
-              <h1 className="h3 mb-0 text-gray-800">
-                {renderPageHeading(category)}
-              </h1>
+            <div className="d-sm-flex align-items-center justify-content-between">
+              <Grid container spacing={1}>
+                <Grid item xs={10}>
+                  <div className="d-sm-flex align-items-center justify-content-between">
+                    <h3>
+                      {renderPageHeading(category)}
+                    </h3>
+                  </div>
+                </Grid>
+                <Grid item xs={2}>
+                  <div className="d-sm-flex align-items-center justify-content-between float-right">
+                    <h4>
+                     Total Count : {filteredApps.length}
+                    </h4>
+                  </div>
+                </Grid>
+              </Grid>
             </div>
 
             <div className="card-container row">
-              {apps
-                .filter(app => {
-                  if (
-                    category &&
-                    category.trim() != "" &&
-                    category.trim() != "all"
-                  ) {
-                    if (
-                      app.category &&
-                      app.category.toLowerCase() == category
-                    ) {
-                      return app;
-                    }
-                  } else {
-                    return app;
-                  }
-                })
-                .filter(app => {
-                  if (searchKey && searchKey.trim()!==""){
-                    for (const skyAppKey in app){
-                      if (app[skyAppKey]!=null && app[skyAppKey].toLowerCase().indexOf(searchKey.toLowerCase())>-1){
-                        return app;
-                      }
-                    }
-                  } else {
-                    return app;
-                  }
-                })
-                .map((app, i) => { 
-                  cardCount = cardCount +1;
+              {filteredApps
+                .map((app, i) => {
+                  cardCount = cardCount + 1;
                   return (
-                  <div className="col-md-3 side-padding-0" key={i}>
-                    {/* <div className="card card-video"> */}
-                    <div className={"card card-" + app.category.toLowerCase()}>
-                      <div className="card-count-container">
-                        <h4 className="pl-30"> {app.title} </h4>
-                        {/* <div className="card-count">
+                    <div className="col-md-3 side-padding-0" key={i}>
+                      {/* <div className="card card-video"> */}
+                      <div
+                        className={"card card-" + app.category.toLowerCase()}
+                      >
+                        <div className="card-count-container">
+                          <h4 className="pl-30"> {app.title} </h4>
+                          {/* <div className="card-count">
                     {RENDER_CATEGORY_LOGO(app.category)}
                   </div> */}
-                      </div>
+                        </div>
 
-                      <div className="card-content ">{app.description}</div>
+                        <div className="card-content ">{app.description}</div>
 
-                      <div className="card-footer">
-                        {RENDER_CATEGORY_LOGO(app.category)}
-                        <EditOutlinedIcon
-                          className="float-right cursor-pointer"
-                          onClick={() => this.openSkyApp(app.id)}
-                        />
-                        {app.skylink && app.skylink.trim()!="" && 
-                        <OpenInNewIcon 
-                          className="float-right cursor-pointer margin-right-20"
-                          onClick={() => { this.launchSkyLink("https://siasky.net/"+app.skylink)}}/>
-                        }
+                        <div className="card-footer">
+                          {RENDER_CATEGORY_LOGO(app.category)} 
+                          <EditOutlinedIcon
+                            className="float-right cursor-pointer"
+                            onClick={() => this.openSkyApp(app.id)}
+                          />
+                          {app.skylink && app.skylink.trim() != "" && (
+                            <OpenInNewIcon
+                              className="float-right cursor-pointer margin-right-20"
+                              onClick={() => {
+                                this.launchSkyLink(
+                                  "https://siasky.net/" + app.skylink
+                                );
+                              }}
+                            />
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )})}
+                  );
+                })}
             </div>
           </div>
         </div>
