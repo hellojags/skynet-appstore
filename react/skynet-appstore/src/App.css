@@ -11165,4 +11165,10 @@ body.sidebar-toggled footer.sticky-footer {
 .MuiButton-containedPrimary{
   background-color: #9ee636 !important;
 }
+
+.banner-text {
+  font-size: 30px;
+  color: #078007;
+  text-align: center;
+}
 /* SKYNET END */

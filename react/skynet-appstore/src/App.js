@@ -13,6 +13,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
+import Grid from "@material-ui/core/Grid";
 import MailIcon from "@material-ui/icons/Mail";
 
 import {
@@ -112,15 +113,32 @@ class App extends React.Component {
           <CssBaseline />
           <AppBar position="fixed" className={classes.appBar} color="inherit">
             <Toolbar>
-              <Typography variant="h6" noWrap>
-                <NavLink to="/">
+              {/* <Typography variant="h6" noWrap> */}
+                {/* <NavLink to="/">
                   <img
                     src={skyapplogo}
                     alt="SkynetHub Logo"
                     className="cursor-pointer"
                   ></img>
-                </NavLink>
-              </Typography>
+                </NavLink> */}
+                <Grid container spacing={1}>
+                <Grid item xs={2}>
+                  <NavLink to="/">
+                    <img
+                      src={skyapplogo}
+                      alt="SkynetHub Logo"
+                      className="cursor-pointer"
+                    ></img>
+                  </NavLink>
+                </Grid>
+                <Grid item xs={8}>
+                  <div className="banner-text">
+                    SKYNET APPSTORE
+                  </div>
+                </Grid>
+              </Grid>
+
+              {/* </Typography> */}
             </Toolbar>
           </AppBar>
           <Drawer
