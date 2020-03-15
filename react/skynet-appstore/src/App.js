@@ -88,13 +88,7 @@ class App extends React.Component {
       searchKey: '',
     };
     this.handleSrchSbmt = this.handleSrchSbmt.bind(this);
-    this.handleLogoClick = this.handleLogoClick.bind(this);
     this.handleSrchKeyChng = this.handleSrchKeyChng.bind(this);
-  }
-
-  handleLogoClick(evt){
-    evt.preventDefault();
-    window.open("/","_self");
   }
 
   handleSrchSbmt(evt){
@@ -120,9 +114,10 @@ class App extends React.Component {
       <AppBar position="fixed" className={classes.appBar} color="inherit">
         <Toolbar>
           <Typography variant="h6" noWrap>
+            <NavLink to="/">
             <img src={skyapplogo} alt="SkynetHub Logo"
-              className="cursor-pointer"
-              onClick={this.handleLogoClick}></img>
+              className="cursor-pointer"></img>
+              </NavLink>
           </Typography>
         </Toolbar>
       </AppBar>
