@@ -437,7 +437,7 @@ class SnRegister extends React.Component {
                   value={skyapp.title}
                   autoComplete="off"
                   onChange={this.handleChange}
-                  helperText={errorObj.title ? 'Skynet App Name is a mandatory field.' : 'Max 20 characters.'}
+                  helperText={errorObj.title ? 'Skynet App Name is a mandatory field.' : 'Max 20 characters. This is a mandatory field.'}
                   onInput={e => {
                     e.target.value = e.target.value.slice(0, 20);
                   }}
@@ -468,7 +468,7 @@ class SnRegister extends React.Component {
                   fullWidth
                   value={skyapp.skylink}
                   autoComplete="off"
-                  helperText={errorObj.description ? 'Skylink is a mandatory field.' : 'Max 46 charecters'}
+                  helperText={errorObj.description ? 'Skylink is a mandatory field.' : 'Max 46 characters. This is a mandatory field.'}
                   onInput={e => {
                     e.target.value = e.target.value.slice(0, 46);
                   }}
@@ -484,7 +484,7 @@ class SnRegister extends React.Component {
                   fullWidth
                   value={skyapp.skylink}
                   autoComplete="off"
-                  helperText={errorObj.description ? 'WebApp url is a mandatory field.' : 'Example: https://skynethub.io/{skylink}, https://mywebsite.com'}
+                  helperText={errorObj.description ? 'WebApp url is a mandatory field.' : 'Example: https://skynethub.io/{skylink}, https://mywebsite.com.  This is a mandatory field.'}
                   onInput={e => {
                     e.target.value = e.target.value.slice(0, 46);
                   }}
@@ -555,9 +555,9 @@ class SnRegister extends React.Component {
                       <MenuItem key={index} value={txt}>{txt.toUpperCase()}</MenuItem>
                     ))}
                   </Select>
-                  {errorObj.category && 
-                    <FormHelperText>Please select a category.</FormHelperText>
-                  }
+                  
+                    <FormHelperText>Please select a category. This is a mandatory field.</FormHelperText>
+                  
                 </FormControl>
               </Grid>
               <Grid item xs={5}>
