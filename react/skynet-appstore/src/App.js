@@ -122,6 +122,7 @@ class App extends React.Component {
         <Toolbar>
           <Typography variant="h6" noWrap>
             <img src={skyapplogo} alt="SkynetHub Logo"
+              className="cursor-pointer"
               onClick={this.handleLogoClick}></img>
             {goToAllApps && <Redirect to={"/"} />}
           </Typography>
