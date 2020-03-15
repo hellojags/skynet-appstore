@@ -185,7 +185,7 @@ class SnCards extends React.Component {
       console.log(filteredApps)
       return (
         <div className="card-parent-conatiner">
-          <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+          <nav className="navbar navbar-expand navbar-light bg-white topbar mb-1 static-top shadow">
             <button
               id="sidebarToggleTop"
               className="btn btn-link d-md-none rounded-circle mr-3"
@@ -264,16 +264,16 @@ class SnCards extends React.Component {
               <Grid container spacing={1}>
                 <Grid item xs={8}>
                   <div className="d-sm-flex align-items-center justify-content-between">
-                    <h3>
+                    <h5>
                       {renderPageHeading(category)}
-                    </h3>
+                    </h5>
                   </div>
                 </Grid>
                 <Grid item xs={4}>
                   <div className="d-sm-flex align-items-center justify-content-between float-right">
-                    <h4>
+                    <h6>
                      Total Count : {filteredApps.length}
-                    </h4>
+                    </h6>
                   </div>
                 </Grid>
               </Grid>
@@ -290,7 +290,7 @@ class SnCards extends React.Component {
                         className={"card card-" + app.category.toLowerCase()}
                       >
                         <div className="card-count-container">
-                          <h4 className="pl-30"> {app.title} </h4>
+                          <h5 className="pl-10"> {app.title} </h5>
                           {/* <div className="card-count">
                     {RENDER_CATEGORY_LOGO(app.category)}
                   </div> */}
