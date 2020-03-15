@@ -428,13 +428,13 @@ class SnRegister extends React.Component {
                 <TextField
                   id="title"
                   name="title"
-                  label="Skynet App Name"
+                  label="Skynet App Name*"
                   fullWidth
                   error={errorObj.title}
                   value={skyapp.title}
                   autoComplete="off"
                   onChange={this.handleChange}
-                  helperText={errorObj.title ? 'Title is a mandatory field.' : 'Max 20 characters.'}
+                  helperText={errorObj.title ? 'Skynet App Name is a mandatory field.' : 'Max 20 characters.'}
                   onInput={e => {
                     e.target.value = e.target.value.slice(0, 20);
                   }}
@@ -444,7 +444,7 @@ class SnRegister extends React.Component {
                 <TextField
                   id="description"
                   name="description"
-                  label="Skynet App Description"
+                  label="Skynet App Description*"
                   error={errorObj.description}
                   fullWidth
                   value={skyapp.description}
@@ -460,7 +460,7 @@ class SnRegister extends React.Component {
                 <TextField
                   id="skylink"
                   name="skylink"
-                  label="Skynet App - Skylink (46 character without sia://)"
+                  label="Skynet App - Skylink (46 character without sia://)*"
                   error={errorObj.description}
                   fullWidth
                   value={skyapp.skylink}
@@ -476,7 +476,7 @@ class SnRegister extends React.Component {
                 <TextField
                   id="portal"
                   name="portal"
-                  label="WebApp URL"
+                  label="WebApp URL*"
                   error={errorObj.description}
                   fullWidth
                   value={skyapp.skylink}
@@ -534,7 +534,7 @@ class SnRegister extends React.Component {
                   error={errorObj.category}
                   >
                   <InputLabel id="demo-simple-select-label">
-                    Category
+                    Category*
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"

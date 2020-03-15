@@ -62,7 +62,7 @@ class SnCards extends React.Component {
   }
 
   launchSkyLink(skyLink){
-    window.open('https://'+skyLink, '_blank');
+    window.open(skyLink, '_blank');
   }
 
   handleSrchSbmt(evt){
@@ -132,7 +132,7 @@ class SnCards extends React.Component {
 
   render() {
     const { apps, error, appsLoaded, category, goToApp, skyappId, searchKey } = this.state;
-
+    let cardCount = 0;
     if (goToApp) {
       return <Redirect to={"/skyapps/" + skyappId} />;
     }
@@ -249,7 +249,7 @@ class SnCards extends React.Component {
                     return app;
                   }
                 })
-                .map((app, i) => (
+                .map((app, i) => { return (
                   <div className="col-md-3 side-padding-0" key={i}>
                     {/* <div className="card card-video"> */}
                     <div className={"card card-" + app.category.toLowerCase()}>
@@ -276,7 +276,7 @@ class SnCards extends React.Component {
                       </div>
                     </div>
                   </div>
-                ))}
+                )})}
             </div>
           </div>
         </div>
