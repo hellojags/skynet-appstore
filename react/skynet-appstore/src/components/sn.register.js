@@ -377,7 +377,7 @@ class SnRegister extends React.Component {
             {getPageHeader(isRegister, edit)}
           </div>
               </Grid>
-              <Grid item xs={8} className="button-grid">
+              <Grid item xs={6} className="button-grid">
                 {!isRegister && (
                   <Button
                     variant="contained"
