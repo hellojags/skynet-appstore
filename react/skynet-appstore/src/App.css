@@ -10627,8 +10627,20 @@ a:focus {
   background-image: linear-gradient(90deg, #6fc6a9, #058ba9);
 }
 
-.card-container .card-app .card-count, .card-container .card-app .card-footer {
+.card-container .card-games .card-count, .card-container .card-games .card-footer {
   background-image: linear-gradient(90deg, #bbc66f, #66a905);
+}
+
+.card-container .card-pictures .card-count, .card-container .card-books .card-footer {
+  background-image: linear-gradient(90deg, #c48ed1, #a905a1);
+}
+
+.card-container .card-pictures .card-count, .card-container .card-pictures .card-footer {
+  background-image: linear-gradient(90deg, #c48ed1, #0b0377);
+}
+
+.card-container .card-skynetportal .card-count, .card-container .card-skynetportal .card-footer {
+  background-image: linear-gradient(90deg, #d1968e, #18a905);
 }
 
 @media (max-width: 767px) {

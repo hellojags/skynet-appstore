@@ -130,6 +130,27 @@ class SnCards extends React.Component {
     }
   }
 
+  getFilteredApps(){
+    const category = this.state.category;
+    this.state.apps
+    .filter(app => {
+      if (
+        category &&
+        category.trim() != "" &&
+        category.trim() != "all"
+      ) {
+        if (
+          app.category &&
+          app.category.toLowerCase() == category
+        ) {
+          return app;
+        }
+      } else {
+        return app;
+      }
+    })
+  }
+
   render() {
     const { apps, error, appsLoaded, category, goToApp, skyappId, searchKey } = this.state;
     let cardCount = 0;
@@ -169,7 +190,7 @@ class SnCards extends React.Component {
                       variant="filled"
                       className="width-100"
                       onChange={this.handleSrchKeyChng}
-                    />
+                    /> {cardCount}
                   </Grid>
                 </Grid>
               </div>
@@ -249,7 +270,9 @@ class SnCards extends React.Component {
                     return app;
                   }
                 })
-                .map((app, i) => { return (
+                .map((app, i) => { 
+                  cardCount = cardCount +1;
+                  return (
                   <div className="col-md-3 side-padding-0" key={i}>
                     {/* <div className="card card-video"> */}
                     <div className={"card card-" + app.category.toLowerCase()}>
