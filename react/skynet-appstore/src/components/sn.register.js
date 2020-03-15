@@ -43,6 +43,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const emptySkyApp = {
   title: "",
   description: "",
+  skylink: "",
   filename: "",
   fileformat: "",
   type: "",
@@ -55,10 +56,10 @@ const emptySkyApp = {
 
 const getPageHeader = (isRegister, isEdit) => {
   if (isRegister) {
-    return <h1 className="h3 mb-0 text-gray-800">Register SkyApp</h1>;
+    return <h1 className="h3 mb-0 text-gray-800">Register Skynet App (Skapp)</h1>;
   } else if (isEdit) {
-    return <h1 className="h3 mb-0 text-gray-800">Edit SkyApp</h1>;
-  } else return <h1 className="h3 mb-0 text-gray-800">View SkyApp</h1>;
+    return <h1 className="h3 mb-0 text-gray-800">Edit Skapp</h1>;
+  } else return <h1 className="h3 mb-0 text-gray-800">View Skapp</h1>;
 };
 
 let appId = "";
@@ -190,6 +191,7 @@ class SnRegister extends React.Component {
           skyapp: {
             title: res.title,
             description: res.description,
+            skylink: res.skylink,
             filename: res.filename,
             fileformat: res.fileformat,
             type: res.type,
@@ -253,6 +255,8 @@ class SnRegister extends React.Component {
     if (!this.state.isRegister) {
       url += appId;
       if (param == "delete") {
+        url += "/"+this.state.skyapp.auth_code;
+        //console.log("url---->>>",url)
         apiMethod = "DELETE";
       } else {
         apiMethod = "PUT";
@@ -268,8 +272,16 @@ class SnRegister extends React.Component {
       }
     })
       .then(res => {
-        console.log(res.status);
-        if (res.status!=200 && res.status!=201){
+        //console.log("-------------"+res.status);
+        //console.log("-------------"+apiMethod);
+        if(apiMethod == "DELETE" && res.status == 204)
+        {
+          return {
+            status : WEBSERVICE_SUCCESS
+          }
+        }
+        else if (res.status!=200 && res.status!=201)
+        {
           return {
             status : WEBSERVICE_FAILURE
           }
@@ -416,15 +428,15 @@ class SnRegister extends React.Component {
                 <TextField
                   id="title"
                   name="title"
-                  label="Title"
+                  label="Skynet App Name"
                   fullWidth
                   error={errorObj.title}
                   value={skyapp.title}
                   autoComplete="off"
                   onChange={this.handleChange}
-                  helperText={errorObj.title ? 'Title is a mandatory field.' : 'Max 15 characters.'}
+                  helperText={errorObj.title ? 'Title is a mandatory field.' : 'Max 20 characters.'}
                   onInput={e => {
-                    e.target.value = e.target.value.slice(0, 15);
+                    e.target.value = e.target.value.slice(0, 20);
                   }}
                 />
               </Grid>
@@ -432,14 +444,30 @@ class SnRegister extends React.Component {
                 <TextField
                   id="description"
                   name="description"
-                  label="Description"
+                  label="Skynet App Description"
                   error={errorObj.description}
                   fullWidth
                   value={skyapp.description}
                   autoComplete="off"
-                  helperText={errorObj.description ? 'Title is a mandatory field.' : 'Max 200 charecters'}
+                  helperText={errorObj.description ? 'Skynet App Description is a mandatory field.' : 'Max 200 charecters'}
                   onInput={e => {
                     e.target.value = e.target.value.slice(0, 200);
+                  }}
+                  onChange={this.handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="skylink"
+                  name="skylink"
+                  label="Skynet App - Skylink (46 character without sia://)"
+                  error={errorObj.description}
+                  fullWidth
+                  value={skyapp.skylink}
+                  autoComplete="off"
+                  helperText={errorObj.description ? 'Skylink is a mandatory field.' : 'Max 46 charecters'}
+                  onInput={e => {
+                    e.target.value = e.target.value.slice(0, 46);
                   }}
                   onChange={this.handleChange}
                 />

@@ -114,7 +114,7 @@ class App extends React.Component {
       <AppBar position="fixed" className={classes.appBar} color="inherit">
         <Toolbar>
           <Typography variant="h6" noWrap>
-            <img src={skyapplogo} alt="SkyApp Logo"></img>
+            <img src={skyapplogo} alt="SkynetHub Logo"></img>
           </Typography>
         </Toolbar>
       </AppBar>

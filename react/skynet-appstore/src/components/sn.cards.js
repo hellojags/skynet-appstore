@@ -265,7 +265,7 @@ class SnCards extends React.Component {
                         {app.skylink && app.skylink.trim()!="" && 
                         <OpenInNewIcon 
                           className="float-right cursor-pointer margin-right-20"
-                          onClick={() => { this.launchSkyLink(app.skylink)}}/>
+                          onClick={() => { this.launchSkyLink("https://skynethub.io/"+app.skylink)}}/>
                         }
                       </div>
                     </div>
