@@ -587,6 +587,7 @@ class SnRegister extends React.Component {
                   <TextField
                     id="auth_code"
                     name="auth_code"
+                    error
                     label="Enter Secret Key To Edit/Delete Sky App"
                     fullWidth
                     autoComplete="off"
