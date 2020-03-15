@@ -365,16 +365,19 @@ class SnRegister extends React.Component {
     if (!showLoader) {
       return (
         <div className="container-fluid register-container">
-          <div className="d-sm-flex align-items-center justify-content-between mb-4">
-            {getPageHeader(isRegister, edit)}
-          </div>
           <ValidatorForm
             ref="form"
             onSubmit={this.handleSubmit}
             onError={errors => console.log(errors)}
           >
+          
             <Grid container spacing={5}>
-              <Grid item xs={12} className="button-grid">
+            <Grid item xs={4}>
+            <div className="d-sm-flex align-items-center justify-content-between mb-4">
+            {getPageHeader(isRegister, edit)}
+          </div>
+              </Grid>
+              <Grid item xs={8} className="button-grid">
                 {!isRegister && (
                   <Button
                     variant="contained"
