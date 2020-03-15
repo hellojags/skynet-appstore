@@ -86,7 +86,6 @@ class App extends React.Component {
     super(props);
     this.state ={
       searchKey: '',
-      goToAllApps: false
     };
     this.handleSrchSbmt = this.handleSrchSbmt.bind(this);
     this.handleLogoClick = this.handleLogoClick.bind(this);
@@ -112,7 +111,7 @@ class App extends React.Component {
 
   render(){
     const { classes } = this.props;
-    const { searchKey, goToAllApps } = this.state;
+    const { searchKey } = this.state;
 
     return (
       <Router>
@@ -124,7 +123,6 @@ class App extends React.Component {
             <img src={skyapplogo} alt="SkynetHub Logo"
               className="cursor-pointer"
               onClick={this.handleLogoClick}></img>
-            {goToAllApps && <Redirect to={"/"} />}
           </Typography>
         </Toolbar>
       </AppBar>
