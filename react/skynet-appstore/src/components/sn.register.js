@@ -424,7 +424,7 @@ class SnRegister extends React.Component {
                   </Button>
                 )}
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={10}>
                 <TextField
                   id="title"
                   name="title"
@@ -440,7 +440,7 @@ class SnRegister extends React.Component {
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={10}>
                 <TextField
                   id="description"
                   name="description"
@@ -456,7 +456,7 @@ class SnRegister extends React.Component {
                   onChange={this.handleChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={10}>
                 <TextField
                   id="skylink"
                   name="skylink"
@@ -472,7 +472,23 @@ class SnRegister extends React.Component {
                   onChange={this.handleChange}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={10}>
+                <TextField
+                  id="portal"
+                  name="portal"
+                  label="WebApp URL"
+                  error={errorObj.description}
+                  fullWidth
+                  value={skyapp.skylink}
+                  autoComplete="off"
+                  helperText={errorObj.description ? 'WebApp url is a mandatory field.' : 'Example: https://skynethub.io/{skylink}, https://mywebsite.com'}
+                  onInput={e => {
+                    e.target.value = e.target.value.slice(0, 46);
+                  }}
+                  onChange={this.handleChange}
+                />
+              </Grid>
+              {/* <Grid item xs={6}>
                 <TextField
                   id="filename"
                   name="filename"
@@ -493,7 +509,7 @@ class SnRegister extends React.Component {
                   autoComplete="off"
                   onChange={this.handleChange}
                 />
-              </Grid>
+              </Grid> 
               <Grid item xs={6} className="select-grid">
                 <FormControl className={classes.formControl}>
                   <InputLabel id="demo-simple-select-label">Type</InputLabel>
@@ -512,8 +528,8 @@ class SnRegister extends React.Component {
                     <MenuItem value="f">File</MenuItem>
                   </Select>
                 </FormControl>
-              </Grid>
-              <Grid item xs={6} className="select-grid">
+              </Grid>*/}
+              <Grid item xs={5} className="select-grid">
                 <FormControl className={classes.formControl}
                   error={errorObj.category}
                   >
@@ -541,18 +557,18 @@ class SnRegister extends React.Component {
                   }
                 </FormControl>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={5}>
                 <TextField
                   id="git_url"
                   name="git_url"
-                  label="Github URL"
+                  label="Github/GitLab URL"
                   fullWidth
                   value={skyapp.git_url}
                   autoComplete="off"
                   onChange={this.handleChange}
                 />
               </Grid>
-              <Grid item xs={6} className="paddingt-40">
+              {/* <Grid item xs={5} className="paddingt-40">
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -564,9 +580,9 @@ class SnRegister extends React.Component {
                   }
                   label="Searchable"
                 />
-              </Grid>
+              </Grid> */}
               {!isRegister && (
-                <Grid item xs={12} className="button-grid">
+                <Grid item xs={10} className="button-grid">
                   <TextField
                     id="auth_code"
                     name="auth_code"

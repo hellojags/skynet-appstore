@@ -18,17 +18,23 @@ import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 function renderPageHeading(category) {
   switch (category) {
     case "all":
-      return "All Apps";
+      return "All Skynet Apps";
       break;
     case "video":
-      return "Videos Apps";
+      return "Videos";
       break;
     case "audio":
-      return "Audio Apps";
+      return "Audio";
       break;
     case "app":
-      return "WebApps";
+      return "Web Apps";
       break;
+    case "games":
+        return "Games";
+        break;
+    case "books":
+        return "Books";
+        break;
     case "blog":
       return "Blogs";
       break;
@@ -158,7 +164,7 @@ class SnCards extends React.Component {
                   <Grid item className="width-90">
                     <TextField
                       id="filled-secondary"
-                      label="Search the SKY"
+                      label="Search Skynet Apps"
                       name="searchKey"
                       variant="filled"
                       className="width-100"
