@@ -262,14 +262,14 @@ class SnCards extends React.Component {
           <div className="container-fluid">
             <div className="d-sm-flex align-items-center justify-content-between">
               <Grid container spacing={1}>
-                <Grid item xs={10}>
+                <Grid item xs={8}>
                   <div className="d-sm-flex align-items-center justify-content-between">
                     <h3>
                       {renderPageHeading(category)}
                     </h3>
                   </div>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={4}>
                   <div className="d-sm-flex align-items-center justify-content-between float-right">
                     <h4>
                      Total Count : {filteredApps.length}

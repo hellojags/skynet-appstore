@@ -372,12 +372,12 @@ class SnRegister extends React.Component {
           >
           
             <Grid container spacing={3}>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
             {getPageHeader(isRegister, edit)}
           </div>
               </Grid>
-              <Grid item xs={6} className="button-grid">
+              <Grid item xs={7} className="button-grid">
                 {!isRegister && (
                   <Button
                     variant="contained"
