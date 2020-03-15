@@ -76,7 +76,7 @@ class SnRegister extends React.Component {
       openEnableEditDlg: false,
       skyAppSecret: "",
       openEdtFailDlg: false,
-      skyapp: emptySkyApp,
+      skyapp: JSON.parse(JSON.stringify(emptySkyApp)),
       errorObj: this.createEmptyErrObj()
     };
     this.handleChange = this.handleChange.bind(this);
@@ -161,7 +161,7 @@ class SnRegister extends React.Component {
     if (path === "/register") {
       this.setState({
         isRegister: true,
-        skyapp: emptySkyApp
+        skyapp: JSON.parse(JSON.stringify(emptySkyApp))
       });
       console.log("this.setState ", this.state.skyapp);
     } else {
@@ -212,7 +212,7 @@ class SnRegister extends React.Component {
       if (!this.state.isRegister) {
         this.setState({
           isRegister: true,
-          skyapp: emptySkyApp
+          skyapp: JSON.parse(JSON.stringify(emptySkyApp))
         });
         console.log("this.setState ", this.state.skyapp);
       }
