@@ -371,7 +371,7 @@ class SnRegister extends React.Component {
             onError={errors => console.log(errors)}
           >
           
-            <Grid container spacing={5}>
+            <Grid container spacing={3}>
             <Grid item xs={4}>
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
             {getPageHeader(isRegister, edit)}
