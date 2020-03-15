@@ -18,7 +18,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import {
   Route,
   Link,
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   NavLink,
   Redirect
