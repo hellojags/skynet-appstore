@@ -9581,12 +9581,6 @@ a:focus {
   flex: 1 0 auto;
 }
 
-.container,
-.container-fluid {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
-
 .scroll-to-top {
   position: fixed;
   right: 1rem;
@@ -11166,5 +11160,9 @@ body.sidebar-toggled footer.sticky-footer {
 
 .cursor-auto {
   cursor: auto !important;
+}
+
+.MuiButton-containedPrimary{
+  background-color: #9ee636 !important;
 }
 /* SKYNET END */

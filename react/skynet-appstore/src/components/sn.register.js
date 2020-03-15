@@ -381,7 +381,6 @@ class SnRegister extends React.Component {
                 {!isRegister && (
                   <Button
                     variant="contained"
-                    color="secondary"
                     className="btn-20px"
                     type="button"
                     onClick={evt => this.handleSubmit(evt, "delete")}
